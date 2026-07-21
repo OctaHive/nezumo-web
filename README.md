@@ -1,48 +1,135 @@
-# Nezumo website
+<p align="center">
+  <a href="https://nezumo.ru">
+    <img src="./public/logo.svg" width="96" height="96" alt="Nezumo logo" />
+  </a>
+</p>
 
-Самостоятельный маркетинговый сайт Nezumo на Astro. Проект не зависит от
-приложения доски или пакетов из `web-react-starter`.
+<h1 align="center">Nezumo Web</h1>
 
-## Запуск
+<p align="center">
+  The bilingual marketing website for <a href="https://nezumo.ru">Nezumo</a>,
+  an infinite online canvas for collaborative thinking, planning, and presentations.
+</p>
+
+## About
+
+This repository contains the public Nezumo website. It is a standalone static
+Astro project and does not depend on the main Nezumo application or its source
+code.
+
+The website includes:
+
+- Product and download pages
+- A public product roadmap
+- A feature request form
+- A Markdown-powered changelog
+- Terms, privacy, refund, and contact pages
+- Complete Russian and English versions
+
+Russian is the default language and uses root-level routes. English pages use
+the `/en/` prefix. The language switcher keeps visitors on the corresponding
+page whenever they change languages.
+
+## Tech stack
+
+- [Astro](https://astro.build/) for static site generation
+- [Tailwind CSS](https://tailwindcss.com/) for styling
+- [Bun](https://bun.sh/) for package management and scripts
+- [Cloudflare Workers](https://developers.cloudflare.com/workers/) for hosting
+
+## Getting started
+
+### Prerequisites
+
+Install [Bun](https://bun.sh/docs/installation), then clone the repository and
+install its dependencies:
 
 ```bash
+git clone https://github.com/OctaHive/nezumo-web.git
+cd nezumo-web
 bun install
+```
+
+### Environment variables
+
+The project works with its production defaults out of the box. To override
+them locally, copy the example environment file:
+
+```bash
+cp .env.example .env
+```
+
+Available variables:
+
+| Variable | Purpose | Default |
+| --- | --- | --- |
+| `PUBLIC_APP_ORIGIN` | Nezumo application URL used by sign-in and sign-up links | `https://app.nezumo.ru` |
+| `PUBLIC_API_ORIGIN` | API origin used by the feature request form | Same as `PUBLIC_APP_ORIGIN` |
+| `PUBLIC_DESKTOP_MACOS_VERSION` | Displayed macOS app version | `0.1.12` |
+| `PUBLIC_DESKTOP_MACOS_URL` | Custom macOS download URL | Generated from the version |
+| `PUBLIC_DESKTOP_WINDOWS_VERSION` | Displayed Windows app version | `0.1.12` |
+| `PUBLIC_DESKTOP_WINDOWS_URL` | Custom Windows download URL | Generated from the version |
+| `PUBLIC_DESKTOP_LINUX_URL` | Linux download URL | No default; shown as coming soon |
+
+### Development
+
+Start the local development server:
+
+```bash
 bun run dev
 ```
 
-Сайт будет доступен по адресу `http://localhost:4321`.
+The website will be available at <http://localhost:4321>.
 
-## Команды
+## Scripts
 
-```bash
-bun run dev       # локальная разработка
-bun run check     # проверка Astro и TypeScript
-bun run build     # production-сборка в dist/
-bun run preview   # просмотр production-сборки
-bun run deploy    # публикация через Cloudflare Wrangler
-bun run logs      # логи Cloudflare Worker
-```
+| Command | Description |
+| --- | --- |
+| `bun run dev` | Start the local development server |
+| `bun run check` | Run Astro and TypeScript diagnostics |
+| `bun run build` | Build the production website into `dist/` |
+| `bun run preview` | Preview the production build locally |
+| `bun run deploy` | Deploy the production build with Wrangler |
+| `bun run logs` | Stream Cloudflare Worker logs |
 
-## Настройка
-
-Скопируйте `.env.example` в `.env`, если адрес приложения отличается от
-`https://app.nezumo.ru`:
-
-```dotenv
-PUBLIC_APP_ORIGIN=https://app.nezumo.ru
-```
-
-## Структура
+## Project structure
 
 ```text
-website/
-├── content/            # записи раздела «Обновления»
-├── layouts/            # общий layout
-├── pages/              # страницы и маршруты Astro
-├── public/             # изображения, шрифты и favicon
-├── styles/             # глобальные стили
-├── astro.config.mjs
-├── content.config.ts
-├── package.json
-└── wrangler.jsonc
+.
+├── content/            # Markdown changelog entries
+├── layouts/            # Shared page layout and navigation
+├── pages/              # Russian routes and English routes under /en
+├── public/             # Images, fonts, icons, and static metadata
+├── styles/             # Global styles
+├── astro.config.mjs    # Astro configuration
+├── content.config.ts   # Changelog collection schema
+└── wrangler.jsonc      # Cloudflare deployment configuration
 ```
+
+## Localization
+
+Keep equivalent Russian and English routes in sync when adding pages. Russian
+changelog entries live in `content/updates/`; their English counterparts live
+in `content/updates/en/` and must use the same filename so the language switcher
+can preserve the current article.
+
+The shared layout provides localized navigation, footer content, document
+language attributes, canonical URLs, `hreflang` links, and Open Graph locale
+metadata.
+
+## Deployment
+
+Create a production build before deploying:
+
+```bash
+bun run check
+bun run build
+bun run deploy
+```
+
+Wrangler serves the generated `dist/` directory and routes production traffic
+for `nezumo.ru` according to `wrangler.jsonc`.
+
+## License
+
+This project is available under the [MIT License](./LICENSE).

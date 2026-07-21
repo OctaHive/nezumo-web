@@ -1,0 +1,91 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+
+const appOrigin = import.meta.env.PUBLIC_APP_ORIGIN || "https://app.nezumo.ru";
+const apiOrigin = import.meta.env.PUBLIC_API_ORIGIN || appOrigin;
+---
+
+<BaseLayout lang="en" title="Suggest an idea — Nezumo" description="Tell us what feature you need in Nezumo. We read every suggestion and use them to shape the product.">
+  <section class="px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
+    <div class="container mx-auto grid max-w-6xl gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+      <div>
+        <span class="inline-flex items-center gap-2 rounded-full border border-white/70 bg-white/55 px-4 py-2 text-sm font-medium shadow-sm backdrop-blur">
+          <span class="h-2 w-2 rounded-full bg-violet-600"></span>Feature request
+        </span>
+        <h1 class="mt-6 text-4xl font-extrabold tracking-tight sm:text-5xl">Suggest a feature for Nezumo</h1>
+        <p class="mt-5 text-lg leading-relaxed text-muted-foreground">
+          Tell us about the workflow you want to improve: what you do today, where unnecessary work gets in the way, and what a better outcome would look like. This helps us understand the value of your idea and compare it with other requests.
+        </p>
+        <div class="mt-8 grid gap-3 text-sm text-muted-foreground">
+          <div class="rounded-2xl border border-white/75 bg-white/55 p-4 shadow-sm backdrop-blur">
+            <p class="font-semibold text-foreground">What to include</p>
+            <p class="mt-2">Your team context, an example board or process, the behavior you expect, and why the current workaround is inconvenient.</p>
+          </div>
+          <div class="rounded-2xl border border-white/75 bg-white/55 p-4 shadow-sm backdrop-blur">
+            <p class="font-semibold text-foreground">What happens next</p>
+            <p class="mt-2">We will review your idea, match it with similar requests, and consider it when choosing future improvements.</p>
+          </div>
+        </div>
+      </div>
+
+      <form id="feature-request-form" data-api-origin={apiOrigin} class="rounded-3xl border border-white/80 bg-white/70 p-5 shadow-[0_24px_80px_-45px_rgba(57,38,93,0.55)] backdrop-blur-xl sm:p-7">
+        <div class="grid gap-5">
+          <div>
+            <label for="feature-title" class="text-sm font-semibold">Short title</label>
+            <input id="feature-title" name="title" type="text" maxlength="140" required placeholder="For example: retrospective templates" class="mt-2 h-12 w-full rounded-xl border border-border bg-white px-4 text-sm outline-none transition focus:border-violet-400 focus:ring-2 focus:ring-violet-200" />
+          </div>
+          <div>
+            <label for="feature-description" class="text-sm font-semibold">Describe your workflow</label>
+            <textarea id="feature-description" name="description" rows="8" maxlength="4000" required placeholder="What are you trying to do, why does it matter, and how do you work around it today?" class="mt-2 w-full resize-y rounded-xl border border-border bg-white px-4 py-3 text-sm leading-relaxed outline-none transition focus:border-violet-400 focus:ring-2 focus:ring-violet-200"></textarea>
+          </div>
+          <div>
+            <label for="feature-contact" class="text-sm font-semibold">Contact for follow-up</label>
+            <input id="feature-contact" name="contact" type="text" maxlength="180" placeholder="Email or Telegram, optional" class="mt-2 h-12 w-full rounded-xl border border-border bg-white px-4 text-sm outline-none transition focus:border-violet-400 focus:ring-2 focus:ring-violet-200" />
+          </div>
+          <div class="hidden" aria-hidden="true">
+            <label for="feature-company">Company</label>
+            <input id="feature-company" name="company" type="text" tabindex="-1" autocomplete="off" />
+          </div>
+          <div id="feature-request-message" class="hidden rounded-xl border px-4 py-3 text-sm" role="status" aria-live="polite"></div>
+          <button type="submit" class="inline-flex h-12 items-center justify-center rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 px-5 text-sm font-semibold text-white shadow-[0_10px_26px_-12px_rgba(109,76,224,0.85)] transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-60">
+            Send idea
+          </button>
+        </div>
+      </form>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  const form = document.querySelector("#feature-request-form");
+  const message = document.querySelector("#feature-request-message");
+  function showMessage(kind: "success" | "error", text: string) {
+    if (!(message instanceof HTMLElement)) return;
+    message.textContent = text;
+    message.classList.remove("hidden", "border-emerald-200", "bg-emerald-50", "text-emerald-900", "border-red-200", "bg-red-50", "text-red-900");
+    message.classList.add(...(kind === "success" ? ["border-emerald-200", "bg-emerald-50", "text-emerald-900"] : ["border-red-200", "bg-red-50", "text-red-900"]));
+  }
+  if (form instanceof HTMLFormElement) {
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const button = form.querySelector("button[type='submit']");
+      if (button instanceof HTMLButtonElement) button.disabled = true;
+      const data = new FormData(form);
+      const apiOrigin = form.dataset.apiOrigin || "";
+      const payload = { title: String(data.get("title") || ""), description: String(data.get("description") || ""), contact: String(data.get("contact") || ""), company: String(data.get("company") || ""), source: "website", locale: "en", page_url: window.location.href };
+      try {
+        const response = await fetch(`${apiOrigin.replace(/\/$/, "")}/api/v1/support/feature-requests`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
+        if (!response.ok) {
+          const body = await response.json().catch(() => ({}));
+          throw new Error(body.error || "We could not send your idea.");
+        }
+        form.reset();
+        showMessage("success", "Thank you. We received your idea and will consider it in our planning.");
+      } catch (error) {
+        showMessage("error", error instanceof Error ? error.message : "We could not send your idea. Please try again later.");
+      } finally {
+        if (button instanceof HTMLButtonElement) button.disabled = false;
+      }
+    });
+  }
+</script>

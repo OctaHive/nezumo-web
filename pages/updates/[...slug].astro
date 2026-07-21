@@ -3,7 +3,9 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import { getCollection, render } from "astro:content";
 
 export async function getStaticPaths() {
-  const updates = await getCollection("updates");
+  const updates = (await getCollection("updates")).filter(
+    (entry) => !entry.id.startsWith("en/"),
+  );
   return updates.map((entry) => ({
     params: { slug: entry.id },
     props: { entry },

@@ -1,0 +1,32 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+
+const details = [
+  { label: "Company", value: "Nezumo LLC" },
+  { label: "Email", value: "support@nezumo.ru", href: "mailto:support@nezumo.ru" },
+  { label: "Taxpayer ID", value: "— (to be confirmed)" },
+  { label: "Registration number", value: "— (to be confirmed)" },
+  { label: "Registered address", value: "— (to be confirmed)" },
+];
+---
+
+<BaseLayout lang="en" title="Contacts — Nezumo" description="Nezumo contact information and company details.">
+  <section class="px-4 py-16 sm:px-6 lg:px-8">
+    <article class="container mx-auto max-w-3xl">
+      <h1 class="mb-2 text-4xl font-bold tracking-tight">Contacts</h1>
+      <p class="mb-10 text-muted-foreground">
+        For help with the product, billing, or refunds, email <a href="mailto:support@nezumo.ru" class="text-primary hover:underline">support@nezumo.ru</a>.
+      </p>
+      <dl class="divide-y rounded-lg border">
+        {details.map((item) => (
+          <div class="grid grid-cols-1 gap-1 px-4 py-4 sm:grid-cols-3 sm:gap-4">
+            <dt class="text-sm font-medium text-muted-foreground">{item.label}</dt>
+            <dd class="sm:col-span-2">
+              {item.href ? <a href={item.href} class="text-primary hover:underline">{item.value}</a> : item.value}
+            </dd>
+          </div>
+        ))}
+      </dl>
+    </article>
+  </section>
+</BaseLayout>

@@ -1,0 +1,37 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getCollection, render } from "astro:content";
+
+export async function getStaticPaths() {
+  const updates = (await getCollection("updates")).filter((entry) => entry.id.startsWith("en/"));
+  return updates.map((entry) => ({ params: { slug: entry.id.replace(/^en\//, "") }, props: { entry } }));
+}
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const dateFormatter = new Intl.DateTimeFormat("en-US", { day: "numeric", month: "long", year: "numeric" });
+const countItems = [
+  { label: "New", value: entry.data.counts.new, class: "bg-violet-100 text-violet-800" },
+  { label: "Improved", value: entry.data.counts.improved, class: "bg-cyan-100 text-cyan-800" },
+  { label: "Fixed", value: entry.data.counts.fixed, class: "bg-emerald-100 text-emerald-800" },
+].filter((item) => item.value > 0);
+---
+
+<BaseLayout lang="en" title={`${entry.data.title} — Nezumo`} description={entry.data.summary} image={entry.data.cover}>
+  <section class="px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
+    <article class="container mx-auto max-w-4xl">
+      <a href="/en/updates/" class="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"><span aria-hidden="true">←</span>All updates</a>
+      <header class="mx-auto mt-10 max-w-3xl text-center">
+        <div class="flex flex-wrap items-center justify-center gap-2">{entry.data.status === "planned" && <span class="rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold text-amber-800">Coming soon</span>}<time datetime={entry.data.date.toISOString()} class="whitespace-nowrap text-sm font-medium text-muted-foreground">{dateFormatter.format(entry.data.date)}</time></div>
+        <h1 class="mt-5 text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">{entry.data.title}</h1>
+        {entry.data.summary && <p class="mt-5 text-lg leading-relaxed text-muted-foreground sm:text-xl">{entry.data.summary}</p>}
+        {countItems.length > 0 && <div class="mt-7 flex flex-wrap justify-center gap-2">{countItems.map((item) => <span class={`rounded-full px-4 py-1.5 text-sm font-semibold ${item.class}`}>{item.label} · {item.value}</span>)}</div>}
+      </header>
+      {entry.data.cover && <figure class="mt-12 overflow-hidden rounded-3xl border border-white/80 bg-white/55 shadow-[0_24px_80px_-40px_rgba(57,38,93,0.55)] backdrop-blur"><img src={entry.data.cover} alt={entry.data.coverAlt || ""} class="aspect-[16/8] w-full object-cover" /></figure>}
+      <div class="update-content mx-auto mt-12 max-w-3xl rounded-3xl border border-white/70 bg-white/55 px-6 py-8 shadow-[0_20px_70px_-45px_rgba(57,38,93,0.5)] backdrop-blur sm:px-10 sm:py-10"><Content /></div>
+      <footer class="mx-auto mt-10 flex max-w-3xl justify-center"><a href="/en/updates/" class="rounded-xl border border-white/80 bg-white/60 px-5 py-3 text-sm font-semibold shadow-sm backdrop-blur transition hover:bg-white/80">Back to changelog</a></footer>
+    </article>
+  </section>
+  <style is:global>
+    .update-content{color:color-mix(in oklch,var(--foreground) 88%,transparent);font-size:1.0625rem;line-height:1.75}.update-content h2{margin:2.5rem 0 1rem;font-size:1.6rem;font-weight:750;letter-spacing:-.025em}.update-content h2:first-child{margin-top:0}.update-content h3{margin:1.75rem 0 .6rem;font-size:1.15rem;font-weight:700}.update-content p{margin:1rem 0}.update-content ul{margin:1rem 0;padding-left:0;list-style:none}.update-content li{position:relative;margin:.7rem 0;padding-left:1.75rem}.update-content li::before{content:"";position:absolute;top:.72em;left:.25rem;width:.45rem;height:.45rem;border-radius:999px;background:linear-gradient(135deg,#8b5cf6,#22d3ee)}.update-content strong{color:var(--foreground);font-weight:700}.update-content blockquote{margin:1.75rem 0;border-left:3px solid #8b5cf6;border-radius:0 1rem 1rem 0;background:rgb(139 92 246 / .08);padding:1rem 1.25rem;color:var(--muted-foreground)}
+  </style>
+</BaseLayout>

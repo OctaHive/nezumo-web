@@ -1,0 +1,25 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+const clauses = [
+  "A consumer may cancel a purchase at any time before delivery and within 7 (seven) days after delivery.",
+  "A product of proper quality may be returned if its appearance and consumer properties are preserved and proof of the purchase and its terms is available.",
+  "A consumer may not return a product of proper quality with individually defined properties when it can be used exclusively by that consumer.",
+  "When a consumer cancels a purchase, the seller must refund the amount paid under the contract, excluding the seller's cost of collecting the returned product, no later than ten days after receiving the request.",
+];
+---
+
+<BaseLayout lang="en" title="Refund Policy — Nezumo" description="Nezumo refund policy, including the process and terms for returning funds.">
+  <section class="px-4 py-16 sm:px-6 lg:px-8">
+    <article class="container mx-auto max-w-3xl">
+      <h1 class="mb-8 text-4xl font-bold tracking-tight">Refund Policy</h1>
+      <div class="space-y-4 leading-relaxed text-muted-foreground">
+        <p class="rounded-xl border border-violet-200 bg-violet-50/70 p-4 text-sm text-violet-950">This English translation is provided for convenience. If it differs from the <a href="/refund-policy/" class="font-semibold underline">Russian version</a>, the Russian version prevails.</p>
+        <p>Refunds are governed by the rules of international payment systems. The return procedure is regulated by Article 26.1 of the Russian Federal Law on Consumer Protection.</p>
+        <ul class="list-disc space-y-3 pl-6">{clauses.map((clause) => <li>{clause}</li>)}</ul>
+        <p>To request a refund to a bank card, ask Nezumo LLC for a Refund Application, complete it, and email it with a copy of your passport to <a href="mailto:support@nezumo.ru" class="text-primary hover:underline">support@nezumo.ru</a>.</p>
+        <p>The refund will be credited to the bank card within 21 (twenty-one) business days after Nezumo LLC receives the completed Refund Application.</p>
+        <p>For an incorrect charge, send a written request with a copy of your passport and receipts confirming the charge to <a href="mailto:support@nezumo.ru" class="text-primary hover:underline">support@nezumo.ru</a>.</p>
+      </div>
+    </article>
+  </section>
+</BaseLayout>

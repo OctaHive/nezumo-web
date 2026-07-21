@@ -1,0 +1,95 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+
+const columns = [
+  {
+    id: "now", title: "In focus now", eyebrow: "Top priority",
+    description: "What we are working on right now and want to put in users' hands in the next update.",
+    accent: "from-emerald-500 to-teal-500", glow: "bg-emerald-300/30",
+    items: [
+      { title: "Desktop app", text: "Native macOS and Windows apps are already available. We are preparing a Linux build and continuing to make updates effortless.", tag: "Platforms" },
+      { title: "Collaboration reliability", text: "Connection recovery, loading missed events, and clearer network states.", tag: "Collaboration" },
+      { title: "Board export", text: "Save boards as SVG or PDF for presentations, archives, reports, and sharing outside Nezumo.", tag: "Export" },
+      { title: "More access controls", text: "Flexible roles, restricted links, and more transparent participant management.", tag: "Collaboration" },
+      { title: "Mind maps", text: "A dedicated mode for quickly branching ideas and seeing the full structure of your thinking.", tag: "Organization" },
+      { title: "Board polls", text: "Vote right in the workspace to gather opinions faster and make decisions after a discussion.", tag: "Collaboration" },
+      { title: "Iframe support", text: "Embed external material directly on a board: prototypes, documents, widgets, and other interactive sources.", tag: "Media & import" },
+    ],
+  },
+  {
+    id: "next", title: "Exploring next", eyebrow: "Validating workflows",
+    description: "Ideas that look useful but still need more research into workflows, constraints, and priority.",
+    accent: "from-amber-400 to-yellow-500", glow: "bg-amber-300/30",
+    items: [
+      { title: "Board comments", text: "Discussions next to objects, comment statuses, and less context lost after meetings.", tag: "Collaboration" },
+      { title: "More ready-made shapes", text: "A broader object library for diagrams, processes, and visual models, so clear boards take less manual work.", tag: "Editor" },
+      { title: "Board versions and history", text: "Safer work on important boards, with a clear activity history and the ability to return to an earlier state.", tag: "Data safety" },
+      { title: "Import from Miro", text: "Bring existing Miro content into Nezumo without manually recreating every board.", tag: "Media & import" },
+      { title: "Spaces and folders", text: "Organize boards by team, project, and company so work stays neatly separated.", tag: "Organization" },
+    ],
+  },
+  {
+    id: "later", title: "Someday later", eyebrow: "On our radar",
+    description: "Directions we find promising for the product but that are not in the immediate focus.",
+    accent: "from-rose-500 to-red-500", glow: "bg-rose-300/30",
+    items: [
+      { title: "Board templates", text: "Ready-made structures for planning, retrospectives, presentations, research, and learning.", tag: "Organization" },
+      { title: "AI on the board", text: "An assistant that structures board content, finds connections, and turns chaos into a clear model faster.", tag: "Smart work" },
+      { title: "Mobile version", text: "Convenient phone access to review a board, capture an idea, or return to important context on the go.", tag: "Platforms" },
+      { title: "Minimap", text: "Quick navigation around large boards, complex diagrams, research, and long workshops.", tag: "Navigation" },
+      { title: "Flippable cards", text: "Two-sided cards for learning, facilitation, knowledge checks, and activities where an answer should be revealed later.", tag: "Learning" },
+      { title: "Code formatting", text: "Syntax-highlighted code blocks that keep technical discussions readable on a board.", tag: "Editor" },
+      { title: "Dice", text: "A quick random value generator for games, exercises, facilitation, and choosing the next step.", tag: "Interactive" },
+    ],
+  },
+];
+
+const principles = [
+  "Reliability and data safety come first",
+  "New features should work in the browser and desktop app",
+  "Workflows that reduce unnecessary context switching get priority",
+];
+---
+
+<BaseLayout lang="en" title="Roadmap — Nezumo" description="The public Nezumo roadmap: what is in progress, what is planned next, and which ideas we are considering for the future.">
+  <section class="relative overflow-hidden px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
+    <div class="pointer-events-none absolute left-1/2 top-8 h-80 w-80 -translate-x-1/2 rounded-full bg-violet-300/25 blur-3xl"></div>
+    <div class="pointer-events-none absolute right-0 top-1/3 h-72 w-72 rounded-full bg-cyan-300/20 blur-3xl"></div>
+    <div class="container relative mx-auto max-w-7xl">
+      <header class="mx-auto max-w-3xl text-center">
+        <span class="inline-flex items-center gap-2 rounded-full border border-white/70 bg-white/55 px-4 py-2 text-sm font-medium shadow-sm backdrop-blur"><span class="h-2 w-2 rounded-full bg-violet-600"></span>Public roadmap</span>
+        <h1 class="mt-6 text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">What's next for Nezumo</h1>
+        <p class="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-muted-foreground sm:text-xl">A straightforward look at our product direction: what we are building now, what is coming next, and which ideas remain in focus.</p>
+      </header>
+      <div class="mx-auto mt-10 grid max-w-4xl gap-3 rounded-3xl border border-white/80 bg-white/50 p-4 shadow-[0_18px_70px_-45px_rgba(57,38,93,0.55)] backdrop-blur-xl sm:grid-cols-3">
+        {principles.map((principle) => <div class="rounded-2xl bg-white/55 px-4 py-3 text-sm font-medium text-foreground/80">{principle}</div>)}
+      </div>
+      <div class="mt-14 grid gap-6 lg:grid-cols-3">
+        {columns.map((column) => (
+          <section id={column.id} class="relative overflow-hidden rounded-3xl border border-white/80 bg-white/58 p-6 shadow-[0_22px_80px_-45px_rgba(57,38,93,0.55)] backdrop-blur-xl">
+            <div class={`pointer-events-none absolute right-3 top-3 h-28 w-28 rounded-full ${column.glow} blur-2xl`}></div>
+            <div class="relative">
+              <div class="mb-5 flex items-start justify-between gap-4">
+                <div><p class="text-xs font-bold uppercase tracking-[0.18em] text-muted-foreground">{column.eyebrow}</p><h2 class="mt-2 text-2xl font-bold tracking-tight">{column.title}</h2></div>
+                <span class={`mt-1 h-11 w-11 rounded-2xl bg-gradient-to-br ${column.accent} shadow-lg shadow-black/10`} aria-hidden="true"></span>
+              </div>
+              <p class="min-h-16 text-sm leading-relaxed text-muted-foreground">{column.description}</p>
+              <div class="mt-7 space-y-4">
+                {column.items.map((item, index) => (
+                  <article class="group rounded-2xl border border-white/70 bg-white/62 p-5 shadow-sm transition duration-300 hover:-translate-y-0.5 hover:bg-white/80">
+                    <div class="flex items-start justify-between gap-3"><span class="rounded-full bg-foreground/7 px-3 py-1 text-xs font-semibold text-foreground/75">{item.tag}</span><span class="text-xs font-semibold text-muted-foreground">{String(index + 1).padStart(2, "0")}</span></div>
+                    <h3 class="mt-4 text-lg font-bold tracking-tight">{item.title}</h3><p class="mt-2 text-sm leading-relaxed text-muted-foreground">{item.text}</p>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </section>
+        ))}
+      </div>
+      <div class="mx-auto mt-10 flex max-w-4xl flex-col items-center justify-between gap-4 rounded-2xl border border-white/70 bg-white/45 px-6 py-5 text-center backdrop-blur sm:flex-row sm:text-left">
+        <div><p class="font-semibold">The roadmap is a direction, not a contract.</p><p class="mt-1 text-sm text-muted-foreground">Priorities may change after testing, feedback, and technical validation.</p></div>
+        <a href="/en/updates/" class="shrink-0 rounded-xl border bg-white/70 px-5 py-2.5 text-sm font-semibold shadow-sm transition hover:bg-white">View updates</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -6,12 +6,19 @@ export interface Props {
   description?: string;
   image?: string;
   preloadHandwrittenFont?: boolean;
+  lang?: "ru" | "en";
 }
 
 const siteName = "Nezumo";
+const detectedLang = Astro.url.pathname === "/en" || Astro.url.pathname.startsWith("/en/") ? "en" : "ru";
 const {
-  title = "Nezumo — онлайн-доски для совместной работы",
-  description = "Nezumo — бесконечные онлайн-доски для совместной работы команд: рисуйте, планируйте и проводите презентации в реальном времени.",
+  lang = detectedLang,
+  title = lang === "en"
+    ? "Nezumo — online whiteboards for teamwork"
+    : "Nezumo — онлайн-доски для совместной работы",
+  description = lang === "en"
+    ? "Nezumo is an infinite online whiteboard where teams draw, plan, and present together in real time."
+    : "Nezumo — бесконечные онлайн-доски для совместной работы команд: рисуйте, планируйте и проводите презентации в реальном времени.",
   image = "/og-image.png",
   preloadHandwrittenFont = false,
 } = Astro.props;
@@ -21,21 +28,73 @@ const appOrigin = import.meta.env.PUBLIC_APP_ORIGIN || "https://app.nezumo.ru";
 const loginUrl = `${appOrigin}/login`;
 const signupUrl = `${appOrigin}/signup`;
 
-const navLinks = [
-  { href: "/", label: "Главная" },
-  { href: "/updates/", label: "Обновления" },
-  { href: "/roadmap/", label: "Roadmap" },
-  { href: "/feature-request/", label: "Предложить идею" },
-  { href: "/download/", label: "Скачать" },
-];
+const prefix = lang === "en" ? "/en" : "";
+const localPath = (path: string) => path === "/" ? `${prefix}/` : `${prefix}${path}`;
+const labels = lang === "en"
+  ? {
+      tagline: "space for ideas",
+      homeLabel: "Nezumo — home",
+      navigation: "Primary navigation",
+      mobileNavigation: "Mobile navigation",
+      login: "Log in",
+      accountLogin: "Log in to your account",
+      signup: "Sign up",
+      start: "Get started",
+      openMenu: "Open menu",
+      rights: "All rights reserved.",
+      company: "Nezumo LLC",
+      terms: "Terms of Use",
+      refunds: "Refund Policy",
+      privacy: "Privacy Policy",
+      contacts: "Contacts",
+      switchLanguage: "Перейти на русский",
+    }
+  : {
+      tagline: "пространство идей",
+      homeLabel: "Nezumo — на главную",
+      navigation: "Основная навигация",
+      mobileNavigation: "Мобильная навигация",
+      login: "Вход",
+      accountLogin: "Войти в аккаунт",
+      signup: "Регистрация",
+      start: "Начать",
+      openMenu: "Открыть меню",
+      rights: "Все права защищены.",
+      company: "ООО «Незумо»",
+      terms: "Пользовательское соглашение",
+      refunds: "Политика возвратов",
+      privacy: "Персональные данные",
+      contacts: "Контакты",
+      switchLanguage: "Switch to English",
+    };
+
+const navLinks = lang === "en"
+  ? [
+      { href: localPath("/"), label: "Home" },
+      { href: localPath("/updates/"), label: "Updates" },
+      { href: localPath("/roadmap/"), label: "Roadmap" },
+      { href: localPath("/feature-request/"), label: "Suggest an idea" },
+      { href: localPath("/download/"), label: "Download" },
+    ]
+  : [
+      { href: localPath("/"), label: "Главная" },
+      { href: localPath("/updates/"), label: "Обновления" },
+      { href: localPath("/roadmap/"), label: "Roadmap" },
+      { href: localPath("/feature-request/"), label: "Предложить идею" },
+      { href: localPath("/download/"), label: "Скачать" },
+    ];
 
 const currentPath = Astro.url.pathname;
 const isActive = (href: string) =>
-  href === "/" ? currentPath === "/" : currentPath.startsWith(href);
+  href === "/" || href === "/en/" ? currentPath === href : currentPath.startsWith(href);
+const pathWithoutEnglishPrefix = currentPath.replace(/^\/en(?=\/|$)/, "") || "/";
+const russianUrl = pathWithoutEnglishPrefix;
+const englishUrl = `/en${pathWithoutEnglishPrefix}`.replace(/\/$/, "") + (pathWithoutEnglishPrefix.endsWith("/") ? "/" : "");
+const languageUrl = lang === "en" ? russianUrl : englishUrl;
 ---
 
 <!doctype html>
-<html lang="ru">
+<html lang={lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -57,10 +116,16 @@ const isActive = (href: string) =>
     <title>{title}</title>
     <meta name="title" content={title} />
     <meta name="description" content={description} />
+    <link rel="canonical" href={new URL(currentPath, Astro.url.origin)} />
+    <link rel="alternate" hreflang="ru" href={new URL(russianUrl, Astro.url.origin)} />
+    <link rel="alternate" hreflang="en" href={new URL(englishUrl, Astro.url.origin)} />
+    <link rel="alternate" hreflang="x-default" href={new URL(russianUrl, Astro.url.origin)} />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content={Astro.url} />
+    <meta property="og:locale" content={lang === "en" ? "en_US" : "ru_RU"} />
+    <meta property="og:locale:alternate" content={lang === "en" ? "ru_RU" : "en_US"} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={new URL(image, Astro.url)} />
@@ -128,9 +193,9 @@ const isActive = (href: string) =>
             class="relative flex h-[68px] items-center justify-between rounded-2xl border border-white/75 bg-white/65 px-3 shadow-[0_14px_45px_-24px_rgba(57,38,93,0.5)] backdrop-blur-xl sm:px-4"
           >
             <a
-              href="/"
+              href={localPath("/")}
               class="group flex shrink-0 items-center gap-2.5 rounded-xl pr-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500"
-              aria-label="Nezumo — на главную"
+              aria-label={labels.homeLabel}
             >
               <span
                 class="relative flex h-11 w-11 items-center justify-center overflow-hidden rounded-xl border border-white bg-white/80 shadow-sm transition-transform duration-300 group-hover:-rotate-2 group-hover:scale-105"
@@ -155,14 +220,14 @@ const isActive = (href: string) =>
                 <span
                   class="mt-1 hidden text-[10px] font-medium uppercase tracking-[0.15em] text-muted-foreground sm:block"
                 >
-                  пространство идей
+                  {labels.tagline}
                 </span>
               </span>
             </a>
 
             <nav
-              class="absolute left-1/2 hidden -translate-x-1/2 items-center gap-1 lg:flex"
-              aria-label="Основная навигация"
+              class="absolute left-1/2 hidden -translate-x-1/2 items-center gap-1 xl:flex"
+              aria-label={labels.navigation}
             >
               {
                 navLinks.map((link) => (
@@ -185,18 +250,27 @@ const isActive = (href: string) =>
               }
             </nav>
 
-            <div class="hidden items-center gap-1.5 lg:flex">
+            <div class="hidden items-center gap-1.5 xl:flex">
+              <a
+                href={languageUrl}
+                hreflang={lang === "en" ? "ru" : "en"}
+                lang={lang === "en" ? "ru" : "en"}
+                aria-label={labels.switchLanguage}
+                class="inline-flex h-9 min-w-10 items-center justify-center rounded-xl border border-white/80 bg-white/55 px-2.5 text-xs font-bold text-muted-foreground shadow-sm transition hover:bg-white/80 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              >
+                {lang === "en" ? "RU" : "EN"}
+              </a>
               <a
                 href={loginUrl}
                 class="inline-flex h-10 items-center justify-center rounded-xl px-4 text-sm font-semibold text-muted-foreground transition-colors hover:bg-white/65 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               >
-                Вход
+                {labels.login}
               </a>
               <a
                 href={signupUrl}
                 class="group inline-flex h-10 items-center justify-center gap-2 whitespace-nowrap rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 px-4 text-sm font-semibold text-white shadow-[0_8px_22px_-8px_rgba(109,76,224,0.8)] transition-all hover:-translate-y-0.5 hover:shadow-[0_12px_26px_-8px_rgba(109,76,224,0.85)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2"
               >
-                Регистрация
+                {labels.signup}
                 <svg
                   viewBox="0 0 20 20"
                   fill="none"
@@ -210,18 +284,18 @@ const isActive = (href: string) =>
               </a>
             </div>
 
-            <div class="flex items-center gap-2 lg:hidden">
+            <div class="flex items-center gap-2 xl:hidden">
               <a
                 href={signupUrl}
                 class="hidden h-10 items-center rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 px-4 text-sm font-semibold text-white shadow-sm sm:inline-flex"
               >
-                Начать
+                {labels.start}
               </a>
 
               <details class="mobile-menu relative">
                 <summary
                   class="flex h-10 w-10 cursor-pointer list-none items-center justify-center rounded-xl border border-white/80 bg-white/60 text-foreground shadow-sm transition hover:bg-white [&::-webkit-details-marker]:hidden"
-                  aria-label="Открыть меню"
+                  aria-label={labels.openMenu}
                 >
                   <svg
                     viewBox="0 0 24 24"
@@ -250,7 +324,7 @@ const isActive = (href: string) =>
                 <div
                   class="absolute right-0 top-12 w-64 rounded-2xl border border-white/80 bg-white/90 p-2 shadow-[0_24px_60px_-24px_rgba(57,38,93,0.55)] backdrop-blur-xl"
                 >
-                  <nav class="grid gap-1" aria-label="Мобильная навигация">
+                  <nav class="grid gap-1" aria-label={labels.mobileNavigation}>
                     {
                       navLinks.map((link) => (
                         <a
@@ -272,16 +346,25 @@ const isActive = (href: string) =>
                   </nav>
                   <div class="my-2 h-px bg-border/70"></div>
                   <a
+                    href={languageUrl}
+                    hreflang={lang === "en" ? "ru" : "en"}
+                    lang={lang === "en" ? "ru" : "en"}
+                    class="flex items-center justify-between rounded-xl px-4 py-3 text-sm font-semibold text-muted-foreground transition hover:bg-accent hover:text-foreground"
+                  >
+                    <span>{labels.switchLanguage}</span>
+                    <span class="rounded-lg border bg-white/70 px-2 py-1 text-xs font-bold">{lang === "en" ? "RU" : "EN"}</span>
+                  </a>
+                  <a
                     href={loginUrl}
                     class="block rounded-xl px-4 py-3 text-sm font-semibold text-muted-foreground transition hover:bg-accent hover:text-foreground"
                   >
-                    Войти в аккаунт
+                    {labels.accountLogin}
                   </a>
                   <a
                     href={signupUrl}
                     class="mt-1 flex items-center justify-center rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 px-4 py-3 text-sm font-semibold text-white sm:hidden"
                   >
-                    Регистрация
+                    {labels.signup}
                   </a>
                 </div>
               </details>
@@ -304,32 +387,32 @@ const isActive = (href: string) =>
             <div class="space-y-1 text-center sm:text-left">
               <p class="font-semibold">{siteName}</p>
               <p class="text-sm text-muted-foreground">
-                © 2026 ООО «Незумо»<br />Все права защищены.
+                © 2026 {labels.company}<br />{labels.rights}
               </p>
             </div>
             <nav
               class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-muted-foreground"
             >
-              <a href="/terms/" class="hover:text-foreground transition-colors">
-                Пользовательское соглашение
+              <a href={localPath("/terms/")} class="hover:text-foreground transition-colors">
+                {labels.terms}
               </a>
               <a
-                href="/refund-policy/"
+                href={localPath("/refund-policy/")}
                 class="hover:text-foreground transition-colors"
               >
-                Политика возвратов
+                {labels.refunds}
               </a>
               <a
-                href="/privacy-policy/"
+                href={localPath("/privacy-policy/")}
                 class="hover:text-foreground transition-colors"
               >
-                Персональные данные
+                {labels.privacy}
               </a>
               <a
-                href="/contacts/"
+                href={localPath("/contacts/")}
                 class="hover:text-foreground transition-colors"
               >
-                Контакты
+                {labels.contacts}
               </a>
             </nav>
           </div>
