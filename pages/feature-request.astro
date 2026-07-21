@@ -1,0 +1,198 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+
+const appOrigin = import.meta.env.PUBLIC_APP_ORIGIN || "https://app.nezumo.ru";
+const apiOrigin = import.meta.env.PUBLIC_API_ORIGIN || appOrigin;
+---
+
+<BaseLayout
+  title="Предложить идею — Nezumo"
+  description="Расскажите, какой функции вам не хватает в Nezumo. Мы читаем предложения и учитываем их при развитии продукта."
+>
+  <section class="px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
+    <div class="container mx-auto grid max-w-6xl gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+      <div>
+        <span class="inline-flex items-center gap-2 rounded-full border border-white/70 bg-white/55 px-4 py-2 text-sm font-medium shadow-sm backdrop-blur">
+          <span class="h-2 w-2 rounded-full bg-violet-600"></span>
+          Feature request
+        </span>
+        <h1 class="mt-6 text-4xl font-extrabold tracking-tight sm:text-5xl">
+          Предложите функцию для Nezumo
+        </h1>
+        <p class="mt-5 text-lg leading-relaxed text-muted-foreground">
+          Опишите сценарий, который хочется закрыть: что вы делаете сейчас,
+          где мешает лишняя работа и какой результат был бы удобен. Так проще
+          понять ценность идеи и сравнить её с другими задачами.
+        </p>
+
+        <div class="mt-8 grid gap-3 text-sm text-muted-foreground">
+          <div class="rounded-2xl border border-white/75 bg-white/55 p-4 shadow-sm backdrop-blur">
+            <p class="font-semibold text-foreground">Что полезно указать</p>
+            <p class="mt-2">
+              Контекст команды, пример доски или процесса, ожидаемое поведение
+              и почему текущий обходной путь неудобен.
+            </p>
+          </div>
+          <div class="rounded-2xl border border-white/75 bg-white/55 p-4 shadow-sm backdrop-blur">
+            <p class="font-semibold text-foreground">Что будет дальше</p>
+            <p class="mt-2">
+              Мы прочитаем идею, сопоставим её с похожими запросами и учтём
+              при выборе следующих улучшений.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <form
+        id="feature-request-form"
+        data-api-origin={apiOrigin}
+        class="rounded-3xl border border-white/80 bg-white/70 p-5 shadow-[0_24px_80px_-45px_rgba(57,38,93,0.55)] backdrop-blur-xl sm:p-7"
+      >
+        <div class="grid gap-5">
+          <div>
+            <label for="feature-title" class="text-sm font-semibold">
+              Короткое название
+            </label>
+            <input
+              id="feature-title"
+              name="title"
+              type="text"
+              maxlength="140"
+              required
+              placeholder="Например: шаблоны для ретроспектив"
+              class="mt-2 h-12 w-full rounded-xl border border-border bg-white px-4 text-sm outline-none transition focus:border-violet-400 focus:ring-2 focus:ring-violet-200"
+            />
+          </div>
+
+          <div>
+            <label for="feature-description" class="text-sm font-semibold">
+              Описание сценария
+            </label>
+            <textarea
+              id="feature-description"
+              name="description"
+              rows="8"
+              maxlength="4000"
+              required
+              placeholder="Что хотите сделать, зачем это нужно и как сейчас приходится обходиться?"
+              class="mt-2 w-full resize-y rounded-xl border border-border bg-white px-4 py-3 text-sm leading-relaxed outline-none transition focus:border-violet-400 focus:ring-2 focus:ring-violet-200"
+            ></textarea>
+          </div>
+
+          <div>
+            <label for="feature-contact" class="text-sm font-semibold">
+              Контакт для уточнений
+            </label>
+            <input
+              id="feature-contact"
+              name="contact"
+              type="text"
+              maxlength="180"
+              placeholder="Email или Telegram, необязательно"
+              class="mt-2 h-12 w-full rounded-xl border border-border bg-white px-4 text-sm outline-none transition focus:border-violet-400 focus:ring-2 focus:ring-violet-200"
+            />
+          </div>
+
+          <div class="hidden" aria-hidden="true">
+            <label for="feature-company">Компания</label>
+            <input
+              id="feature-company"
+              name="company"
+              type="text"
+              tabindex="-1"
+              autocomplete="off"
+            />
+          </div>
+
+          <div
+            id="feature-request-message"
+            class="hidden rounded-xl border px-4 py-3 text-sm"
+            role="status"
+            aria-live="polite"
+          >
+          </div>
+
+          <button
+            type="submit"
+            class="inline-flex h-12 items-center justify-center rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 px-5 text-sm font-semibold text-white shadow-[0_10px_26px_-12px_rgba(109,76,224,0.85)] transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-60"
+          >
+            Отправить идею
+          </button>
+        </div>
+      </form>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  const form = document.querySelector("#feature-request-form");
+  const message = document.querySelector("#feature-request-message");
+
+  function showMessage(kind: "success" | "error", text: string) {
+    if (!(message instanceof HTMLElement)) return;
+    message.textContent = text;
+    message.classList.remove(
+      "hidden",
+      "border-emerald-200",
+      "bg-emerald-50",
+      "text-emerald-900",
+      "border-red-200",
+      "bg-red-50",
+      "text-red-900",
+    );
+    if (kind === "success") {
+      message.classList.add(
+        "border-emerald-200",
+        "bg-emerald-50",
+        "text-emerald-900",
+      );
+    } else {
+      message.classList.add("border-red-200", "bg-red-50", "text-red-900");
+    }
+  }
+
+  if (form instanceof HTMLFormElement) {
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const button = form.querySelector("button[type='submit']");
+      if (button instanceof HTMLButtonElement) button.disabled = true;
+
+      const data = new FormData(form);
+      const apiOrigin = form.dataset.apiOrigin || "";
+      const payload = {
+        title: String(data.get("title") || ""),
+        description: String(data.get("description") || ""),
+        contact: String(data.get("contact") || ""),
+        company: String(data.get("company") || ""),
+        source: "website",
+        page_url: window.location.href,
+      };
+
+      try {
+        const response = await fetch(
+          `${apiOrigin.replace(/\/$/, "")}/api/v1/support/feature-requests`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+          },
+        );
+        if (!response.ok) {
+          const body = await response.json().catch(() => ({}));
+          throw new Error(body.error || "Не удалось отправить идею.");
+        }
+        form.reset();
+        showMessage("success", "Спасибо. Мы получили идею и вернёмся к ней при планировании.");
+      } catch (error) {
+        showMessage(
+          "error",
+          error instanceof Error
+            ? error.message
+            : "Не удалось отправить идею. Попробуйте позже.",
+        );
+      } finally {
+        if (button instanceof HTMLButtonElement) button.disabled = false;
+      }
+    });
+  }
+</script>

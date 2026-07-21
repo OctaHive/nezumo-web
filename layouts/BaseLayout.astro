@@ -1,0 +1,350 @@
+---
+import "@/styles/globals.css";
+
+export interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  preloadHandwrittenFont?: boolean;
+}
+
+const siteName = "Nezumo";
+const {
+  title = "Nezumo — онлайн-доски для совместной работы",
+  description = "Nezumo — бесконечные онлайн-доски для совместной работы команд: рисуйте, планируйте и проводите презентации в реальном времени.",
+  image = "/og-image.png",
+  preloadHandwrittenFont = false,
+} = Astro.props;
+
+// Origin of the application (app.nezumo.ru). Login/signup live there.
+const appOrigin = import.meta.env.PUBLIC_APP_ORIGIN || "https://app.nezumo.ru";
+const loginUrl = `${appOrigin}/login`;
+const signupUrl = `${appOrigin}/signup`;
+
+const navLinks = [
+  { href: "/", label: "Главная" },
+  { href: "/updates/", label: "Обновления" },
+  { href: "/roadmap/", label: "Roadmap" },
+  { href: "/feature-request/", label: "Предложить идею" },
+  { href: "/download/", label: "Скачать" },
+];
+
+const currentPath = Astro.url.pathname;
+const isActive = (href: string) =>
+  href === "/" ? currentPath === "/" : currentPath.startsWith(href);
+---
+
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    {
+      preloadHandwrittenFont && (
+        <link
+          rel="preload"
+          href="/swanky-and-moo-moo.woff2"
+          as="font"
+          type="font/woff2"
+          crossorigin="anonymous"
+        />
+      )
+    }
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Primary Meta Tags -->
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.url} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(image, Astro.url)} />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={Astro.url} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={new URL(image, Astro.url)} />
+
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript" is:inline>
+      (function (m, e, t, r, i, k, a) {
+        m[i] =
+          m[i] ||
+          function () {
+            (m[i].a = m[i].a || []).push(arguments);
+          };
+        m[i].l = 1 * new Date();
+        for (var j = 0; j < document.scripts.length; j++) {
+          if (document.scripts[j].src === r) {
+            return;
+          }
+        }
+        (k = e.createElement(t)),
+          (a = e.getElementsByTagName(t)[0]),
+          (k.async = 1),
+          (k.src = r),
+          a.parentNode.insertBefore(k, a);
+      })(
+        window,
+        document,
+        "script",
+        "https://mc.yandex.ru/metrika/tag.js?id=110569092",
+        "ym",
+      );
+
+      ym(110569092, "init", {
+        ssr: true,
+        clickmap: true,
+        referrer: document.referrer,
+        url: location.href,
+        accurateTrackBounce: true,
+        trackLinks: true,
+      });
+    </script>
+    <noscript
+      ><div>
+        <img
+          src="https://mc.yandex.ru/watch/110569092"
+          style="position:absolute; left:-9999px;"
+          alt=""
+        />
+      </div></noscript
+    >
+    <!-- /Yandex.Metrika counter -->
+  </head>
+  <body>
+    <div class="min-h-screen flex flex-col">
+      <!-- Header -->
+      <header class="sticky top-0 z-50 px-3 pt-3 sm:px-6">
+        <div class="container mx-auto max-w-7xl">
+          <div
+            class="relative flex h-[68px] items-center justify-between rounded-2xl border border-white/75 bg-white/65 px-3 shadow-[0_14px_45px_-24px_rgba(57,38,93,0.5)] backdrop-blur-xl sm:px-4"
+          >
+            <a
+              href="/"
+              class="group flex shrink-0 items-center gap-2.5 rounded-xl pr-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500"
+              aria-label="Nezumo — на главную"
+            >
+              <span
+                class="relative flex h-11 w-11 items-center justify-center overflow-hidden rounded-xl border border-white bg-white/80 shadow-sm transition-transform duration-300 group-hover:-rotate-2 group-hover:scale-105"
+              >
+                <span
+                  class="absolute inset-0 bg-gradient-to-br from-violet-200/50 via-transparent to-cyan-200/60"
+                ></span>
+                <img
+                  src="/logo.svg"
+                  alt=""
+                  width="44"
+                  height="44"
+                  class="relative h-11 w-11"
+                />
+              </span>
+              <span class="leading-none">
+                <span
+                  class="block text-lg font-extrabold tracking-[-0.035em] text-foreground"
+                >
+                  {siteName}
+                </span>
+                <span
+                  class="mt-1 hidden text-[10px] font-medium uppercase tracking-[0.15em] text-muted-foreground sm:block"
+                >
+                  пространство идей
+                </span>
+              </span>
+            </a>
+
+            <nav
+              class="absolute left-1/2 hidden -translate-x-1/2 items-center gap-1 lg:flex"
+              aria-label="Основная навигация"
+            >
+              {
+                navLinks.map((link) => (
+                  <a
+                    href={link.href}
+                    aria-current={isActive(link.href) ? "page" : undefined}
+                    class:list={[
+                      "relative px-4 py-2 text-sm font-semibold transition-colors",
+                      isActive(link.href)
+                        ? "text-foreground"
+                        : "text-muted-foreground hover:text-foreground",
+                    ]}
+                  >
+                    {link.label}
+                    {isActive(link.href) && (
+                      <span class="absolute inset-x-4 bottom-0 h-0.5 rounded-full bg-gradient-to-r from-violet-500 to-cyan-500" />
+                    )}
+                  </a>
+                ))
+              }
+            </nav>
+
+            <div class="hidden items-center gap-1.5 lg:flex">
+              <a
+                href={loginUrl}
+                class="inline-flex h-10 items-center justify-center rounded-xl px-4 text-sm font-semibold text-muted-foreground transition-colors hover:bg-white/65 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              >
+                Вход
+              </a>
+              <a
+                href={signupUrl}
+                class="group inline-flex h-10 items-center justify-center gap-2 whitespace-nowrap rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 px-4 text-sm font-semibold text-white shadow-[0_8px_22px_-8px_rgba(109,76,224,0.8)] transition-all hover:-translate-y-0.5 hover:shadow-[0_12px_26px_-8px_rgba(109,76,224,0.85)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2"
+              >
+                Регистрация
+                <svg
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  class="h-4 w-4 transition-transform group-hover:translate-x-0.5"
+                  aria-hidden="true"
+                >
+                  <path d="M4 10h12m-5-5 5 5-5 5" />
+                </svg>
+              </a>
+            </div>
+
+            <div class="flex items-center gap-2 lg:hidden">
+              <a
+                href={signupUrl}
+                class="hidden h-10 items-center rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 px-4 text-sm font-semibold text-white shadow-sm sm:inline-flex"
+              >
+                Начать
+              </a>
+
+              <details class="mobile-menu relative">
+                <summary
+                  class="flex h-10 w-10 cursor-pointer list-none items-center justify-center rounded-xl border border-white/80 bg-white/60 text-foreground shadow-sm transition hover:bg-white [&::-webkit-details-marker]:hidden"
+                  aria-label="Открыть меню"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    class="menu-open h-5 w-5"
+                    aria-hidden="true"
+                  >
+                    <path d="M4 7h16M4 12h16M4 17h16" />
+                  </svg>
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    class="menu-close hidden h-5 w-5"
+                    aria-hidden="true"
+                  >
+                    <path d="m6 6 12 12M18 6 6 18" />
+                  </svg>
+                </summary>
+
+                <div
+                  class="absolute right-0 top-12 w-64 rounded-2xl border border-white/80 bg-white/90 p-2 shadow-[0_24px_60px_-24px_rgba(57,38,93,0.55)] backdrop-blur-xl"
+                >
+                  <nav class="grid gap-1" aria-label="Мобильная навигация">
+                    {
+                      navLinks.map((link) => (
+                        <a
+                          href={link.href}
+                          aria-current={
+                            isActive(link.href) ? "page" : undefined
+                          }
+                          class:list={[
+                            "rounded-xl px-4 py-3 text-sm font-semibold transition",
+                            isActive(link.href)
+                              ? "bg-violet-50 text-violet-800"
+                              : "text-muted-foreground hover:bg-accent hover:text-foreground",
+                          ]}
+                        >
+                          {link.label}
+                        </a>
+                      ))
+                    }
+                  </nav>
+                  <div class="my-2 h-px bg-border/70"></div>
+                  <a
+                    href={loginUrl}
+                    class="block rounded-xl px-4 py-3 text-sm font-semibold text-muted-foreground transition hover:bg-accent hover:text-foreground"
+                  >
+                    Войти в аккаунт
+                  </a>
+                  <a
+                    href={signupUrl}
+                    class="mt-1 flex items-center justify-center rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 px-4 py-3 text-sm font-semibold text-white sm:hidden"
+                  >
+                    Регистрация
+                  </a>
+                </div>
+              </details>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Main Content -->
+      <main class="flex-1">
+        <slot />
+      </main>
+
+      <!-- Footer -->
+      <footer class="border-t bg-background/95">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div
+            class="flex flex-col sm:flex-row justify-between items-center gap-4"
+          >
+            <div class="space-y-1 text-center sm:text-left">
+              <p class="font-semibold">{siteName}</p>
+              <p class="text-sm text-muted-foreground">
+                © 2026 ООО «Незумо»<br />Все права защищены.
+              </p>
+            </div>
+            <nav
+              class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-muted-foreground"
+            >
+              <a href="/terms/" class="hover:text-foreground transition-colors">
+                Пользовательское соглашение
+              </a>
+              <a
+                href="/refund-policy/"
+                class="hover:text-foreground transition-colors"
+              >
+                Политика возвратов
+              </a>
+              <a
+                href="/privacy-policy/"
+                class="hover:text-foreground transition-colors"
+              >
+                Персональные данные
+              </a>
+              <a
+                href="/contacts/"
+                class="hover:text-foreground transition-colors"
+              >
+                Контакты
+              </a>
+            </nav>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>
+
+<style>
+  .mobile-menu[open] .menu-open {
+    display: none;
+  }
+
+  .mobile-menu[open] .menu-close {
+    display: block;
+  }
+</style>

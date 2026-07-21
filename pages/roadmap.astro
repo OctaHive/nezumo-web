@@ -1,0 +1,265 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+
+const columns = [
+  {
+    id: "now",
+    title: "Сейчас в фокусе",
+    eyebrow: "Главный приоритет",
+    description:
+      "То, над чем работаем прямо сейчас и что хотим показать пользователям в следующем обновлении.",
+    accent: "from-emerald-500 to-teal-500",
+    glow: "bg-emerald-300/30",
+    items: [
+      {
+        title: "Desktop-приложение",
+        text: "Нативные приложения для macOS и Windows уже доступны; готовим Linux-сборку и продолжаем улучшать обновления без лишних действий.",
+        tag: "Платформы",
+      },
+      {
+        title: "Стабильность совместной работы",
+        text: "Восстановление соединения, догрузка пропущенных событий и более понятные состояния сети.",
+        tag: "Совместная работа",
+      },
+      {
+        title: "Экспорт доски",
+        text: "Сохранять доску в SVG и PDF для презентаций, архивов, отчётов и передачи материалов вне Nezumo.",
+        tag: "Экспорт",
+      },
+      {
+        title: "Больше настроек доступа",
+        text: "Гибкие роли, ссылки с ограничениями и более прозрачное управление участниками.",
+        tag: "Совместная работа",
+      },
+      {
+        title: "Mindmap",
+        text: "Отдельный режим для карт мыслей: быстро раскладывать идеи по веткам и видеть структуру рассуждения целиком.",
+        tag: "Организация",
+      },
+      {
+        title: "Опросы на доске",
+        text: "Голосования прямо в рабочем пространстве, чтобы быстрее собирать мнение команды и принимать решения после обсуждения.",
+        tag: "Совместная работа",
+      },
+      {
+        title: "Поддержка iframe",
+        text: "Встраивать внешние материалы прямо на доску: прототипы, документы, виджеты и другие интерактивные источники.",
+        tag: "Медиа и импорт",
+      },
+    ],
+  },
+  {
+    id: "next",
+    title: "Думаем над этим",
+    eyebrow: "Проверяем сценарии",
+    description:
+      "Идеи, которые выглядят полезными, но ещё требуют проверки сценариев, ограничений и приоритетов.",
+    accent: "from-amber-400 to-yellow-500",
+    glow: "bg-amber-300/30",
+    items: [
+      {
+        title: "Комментарии на доске",
+        text: "Хотим добавить обсуждения рядом с объектами, статусы комментариев и меньше потерянного контекста после созвонов.",
+        tag: "Совместная работа",
+      },
+      {
+        title: "Больше готовых фигур",
+        text: "Расширяем набор объектов для схем, процессов и визуальных моделей, чтобы быстрее собирать понятные доски без поиска подходящих элементов вручную.",
+        tag: "Редактор",
+      },
+      {
+        title: "Версии и история изменений доски",
+        text: "Более безопасная работа с важными досками: понятная история действий и возврат к нужному состоянию.",
+        tag: "Сохранность",
+      },
+      {
+        title: "Импорт из Miro",
+        text: "Переносить существующие материалы из Miro в Nezumo, чтобы командам было проще переехать без ручного пересоздания досок.",
+        tag: "Медиа и импорт",
+      },
+      {
+        title: "Пространства и папки",
+        text: "Организовывать доски по командам, проектам и компаниям, чтобы рабочие материалы не смешивались между собой.",
+        tag: "Организация",
+      },
+    ],
+  },
+  {
+    id: "later",
+    title: "Когда-нибудь потом",
+    eyebrow: "Держим в голове",
+    description:
+      "Направления, которые интересны для развития продукта, но сейчас не являются ближайшим фокусом.",
+    accent: "from-rose-500 to-red-500",
+    glow: "bg-rose-300/30",
+    items: [
+      {
+        title: "Шаблоны досок",
+        text: "Готовые структуры для планирования, ретро, презентаций, исследований и учебных сценариев.",
+        tag: "Организация",
+      },
+      {
+        title: "Поддержка AI на доске",
+        text: "Помощник для работы с материалами на доске: структурировать идеи, находить связи и быстрее превращать хаос в понятную модель.",
+        tag: "Умная работа",
+      },
+      {
+        title: "Мобильная версия",
+        text: "Удобный доступ к доскам с телефона: быстро посмотреть материалы, оставить идею или вернуться к важному контексту на ходу.",
+        tag: "Платформы",
+      },
+      {
+        title: "Миникарта",
+        text: "Быстрая навигация по большим доскам, чтобы не теряться в сложных схемах, исследованиях и длинных воркшопах.",
+        tag: "Навигация",
+      },
+      {
+        title: "Флип карточек",
+        text: "Карточки с двумя сторонами для обучения, фасилитации, проверок знаний и сценариев, где ответ лучше открыть позже.",
+        tag: "Обучение",
+      },
+      {
+        title: "Форматирование кода",
+        text: "Блоки кода с подсветкой синтаксиса, чтобы технические обсуждения на доске выглядели читаемо.",
+        tag: "Редактор",
+      },
+      {
+        title: "Игральный кубик",
+        text: "Быстрый генератор случайного значения для игр, упражнений, фасилитации и выбора следующего шага на доске.",
+        tag: "Интерактив",
+      },
+    ],
+  },
+];
+
+const principles = [
+  "Сначала стабильность и сохранность данных",
+  "Новые функции должны работать в браузере и desktop-приложении",
+  "Приоритет получают сценарии, которые сокращают лишние переключения",
+];
+---
+
+<BaseLayout
+  title="Roadmap — Nezumo"
+  description="Публичная дорожная карта Nezumo: что сейчас в работе, что планируется в ближайший релиз и какие идеи находятся в будущих планах."
+>
+  <section class="relative overflow-hidden px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
+    <div
+      class="pointer-events-none absolute left-1/2 top-8 h-80 w-80 -translate-x-1/2 rounded-full bg-violet-300/25 blur-3xl"
+    >
+    </div>
+    <div
+      class="pointer-events-none absolute right-0 top-1/3 h-72 w-72 rounded-full bg-cyan-300/20 blur-3xl"
+    >
+    </div>
+
+    <div class="container relative mx-auto max-w-7xl">
+      <header class="mx-auto max-w-3xl text-center">
+        <span
+          class="inline-flex items-center gap-2 rounded-full border border-white/70 bg-white/55 px-4 py-2 text-sm font-medium shadow-sm backdrop-blur"
+        >
+          <span class="h-2 w-2 rounded-full bg-violet-600"></span>
+          Публичная дорожная карта
+        </span>
+        <h1
+          class="mt-6 text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl"
+        >
+          Что будет дальше в Nezumo
+        </h1>
+        <p
+          class="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-muted-foreground sm:text-xl"
+        >
+          Показываем направление продукта без лишней формальности: что уже
+          делаем, что готовим к ближайшему релизу и какие идеи держим в фокусе.
+        </p>
+      </header>
+
+      <div
+        class="mx-auto mt-10 grid max-w-4xl gap-3 rounded-3xl border border-white/80 bg-white/50 p-4 shadow-[0_18px_70px_-45px_rgba(57,38,93,0.55)] backdrop-blur-xl sm:grid-cols-3"
+      >
+        {
+          principles.map((principle) => (
+            <div class="rounded-2xl bg-white/55 px-4 py-3 text-sm font-medium text-foreground/80">
+              {principle}
+            </div>
+          ))
+        }
+      </div>
+
+      <div class="mt-14 grid gap-6 lg:grid-cols-3">
+        {
+          columns.map((column) => (
+            <section
+              id={column.id}
+              class="relative overflow-hidden rounded-3xl border border-white/80 bg-white/58 p-6 shadow-[0_22px_80px_-45px_rgba(57,38,93,0.55)] backdrop-blur-xl"
+            >
+              <div
+                class={`pointer-events-none absolute right-3 top-3 h-28 w-28 rounded-full ${column.glow} blur-2xl`}
+              />
+              <div class="relative">
+                <div class="mb-5 flex items-start justify-between gap-4">
+                  <div>
+                    <p class="text-xs font-bold uppercase tracking-[0.18em] text-muted-foreground">
+                      {column.eyebrow}
+                    </p>
+                    <h2 class="mt-2 text-2xl font-bold tracking-tight">
+                      {column.title}
+                    </h2>
+                  </div>
+                  <span
+                    class={`mt-1 h-11 w-11 rounded-2xl bg-gradient-to-br ${column.accent} shadow-lg shadow-black/10`}
+                    aria-hidden="true"
+                  />
+                </div>
+
+                <p class="min-h-16 text-sm leading-relaxed text-muted-foreground">
+                  {column.description}
+                </p>
+
+                <div class="mt-7 space-y-4">
+                  {column.items.map((item, index) => (
+                    <article class="group rounded-2xl border border-white/70 bg-white/62 p-5 shadow-sm transition duration-300 hover:-translate-y-0.5 hover:bg-white/80">
+                      <div class="flex items-start justify-between gap-3">
+                        <span class="rounded-full bg-foreground/7 px-3 py-1 text-xs font-semibold text-foreground/75">
+                          {item.tag}
+                        </span>
+                        <span class="text-xs font-semibold text-muted-foreground">
+                          {String(index + 1).padStart(2, "0")}
+                        </span>
+                      </div>
+                      <h3 class="mt-4 text-lg font-bold tracking-tight">
+                        {item.title}
+                      </h3>
+                      <p class="mt-2 text-sm leading-relaxed text-muted-foreground">
+                        {item.text}
+                      </p>
+
+                    </article>
+                  ))}
+                </div>
+              </div>
+            </section>
+          ))
+        }
+      </div>
+
+      <div
+        class="mx-auto mt-10 flex max-w-4xl flex-col items-center justify-between gap-4 rounded-2xl border border-white/70 bg-white/45 px-6 py-5 text-center backdrop-blur sm:flex-row sm:text-left"
+      >
+        <div>
+          <p class="font-semibold">Roadmap — это направление, а не контракт.</p>
+          <p class="mt-1 text-sm text-muted-foreground">
+            Приоритеты могут меняться после тестирования, обратной связи и
+            технических проверок.
+          </p>
+        </div>
+        <a
+          href="/updates/"
+          class="shrink-0 rounded-xl border bg-white/70 px-5 py-2.5 text-sm font-semibold shadow-sm transition hover:bg-white"
+        >
+          Смотреть обновления
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

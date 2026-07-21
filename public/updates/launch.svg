@@ -1,0 +1,146 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" role="img" aria-labelledby="title desc">
+  <title id="title">Праздничный запуск Nezumo</title>
+  <desc id="desc">Праздничная иллюстрация запуска Nezumo с логотипом, конфетти, салютами и карточкой релиза</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#ffe4f4"/>
+      <stop offset=".42" stop-color="#ded9ff"/>
+      <stop offset="1" stop-color="#c9f4f4"/>
+    </linearGradient>
+    <linearGradient id="logoStroke" x1="0" y1="0" x2="1" y2="0">
+      <stop stop-color="#8B5CF6"/>
+      <stop offset=".45" stop-color="#6366F1"/>
+      <stop offset="1" stop-color="#06B6D4"/>
+    </linearGradient>
+    <linearGradient id="ribbon" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#7C3AED"/>
+      <stop offset="1" stop-color="#06B6D4"/>
+    </linearGradient>
+    <radialGradient id="shine" cx="50%" cy="42%" r="58%">
+      <stop stop-color="#fff" stop-opacity=".85"/>
+      <stop offset=".42" stop-color="#fff" stop-opacity=".22"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="22" stdDeviation="20" flood-color="#4c3b68" flood-opacity=".2"/>
+    </filter>
+    <filter id="softShadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#4c3b68" flood-opacity=".14"/>
+    </filter>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0v40" fill="none" stroke="#5d5471" stroke-opacity=".055"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="600" rx="36" fill="url(#bg)"/>
+  <rect width="1200" height="600" rx="36" fill="url(#grid)"/>
+  <rect width="1200" height="600" rx="36" fill="url(#shine)"/>
+
+  <!-- soft celebration beams -->
+  <g opacity=".45">
+    <path d="M600 296 122 40" stroke="#fff" stroke-width="34" stroke-linecap="round" opacity=".35"/>
+    <path d="M600 296 1080 70" stroke="#fff" stroke-width="30" stroke-linecap="round" opacity=".28"/>
+    <path d="M600 296 250 580" stroke="#fff" stroke-width="26" stroke-linecap="round" opacity=".22"/>
+    <path d="M600 296 960 575" stroke="#fff" stroke-width="26" stroke-linecap="round" opacity=".22"/>
+  </g>
+
+  <!-- fireworks -->
+  <g fill="none" stroke-linecap="round" stroke-width="8" opacity=".9">
+    <g transform="translate(180 140)">
+      <path d="M0-54V-84" stroke="#8B5CF6"/>
+      <path d="M0 54v30" stroke="#06B6D4"/>
+      <path d="M-54 0h-30" stroke="#F59E0B"/>
+      <path d="M54 0h30" stroke="#EC4899"/>
+      <path d="M-38-38-60-60" stroke="#06B6D4"/>
+      <path d="M38-38 60-60" stroke="#F59E0B"/>
+      <path d="M-38 38-60 60" stroke="#EC4899"/>
+      <path d="M38 38 60 60" stroke="#8B5CF6"/>
+      <circle cx="0" cy="0" r="12" fill="#fff" stroke="#8B5CF6"/>
+    </g>
+    <g transform="translate(1018 152) scale(.82)">
+      <path d="M0-54V-84" stroke="#06B6D4"/>
+      <path d="M0 54v30" stroke="#8B5CF6"/>
+      <path d="M-54 0h-30" stroke="#EC4899"/>
+      <path d="M54 0h30" stroke="#F59E0B"/>
+      <path d="M-38-38-60-60" stroke="#F59E0B"/>
+      <path d="M38-38 60-60" stroke="#8B5CF6"/>
+      <path d="M-38 38-60 60" stroke="#06B6D4"/>
+      <path d="M38 38 60 60" stroke="#EC4899"/>
+      <circle cx="0" cy="0" r="12" fill="#fff" stroke="#06B6D4"/>
+    </g>
+  </g>
+
+  <!-- confetti -->
+  <g opacity=".95">
+    <circle cx="88" cy="274" r="8" fill="#F59E0B"/>
+    <circle cx="102" cy="470" r="6" fill="#8B5CF6"/>
+    <circle cx="1112" cy="330" r="7" fill="#06B6D4"/>
+    <circle cx="1044" cy="466" r="6" fill="#EC4899"/>
+    <rect x="272" y="88" width="16" height="34" rx="5" fill="#06B6D4" transform="rotate(-22 280 105)"/>
+    <rect x="392" y="72" width="14" height="30" rx="5" fill="#EC4899" transform="rotate(18 399 87)"/>
+    <rect x="777" y="66" width="16" height="34" rx="5" fill="#F59E0B" transform="rotate(25 785 83)"/>
+    <rect x="914" y="254" width="14" height="30" rx="5" fill="#8B5CF6" transform="rotate(-31 921 269)"/>
+    <path d="M233 414c25-22 45 16 70-6" stroke="#EC4899" stroke-width="8" stroke-linecap="round" fill="none"/>
+    <path d="M908 402c24-24 48 14 74-10" stroke="#06B6D4" stroke-width="8" stroke-linecap="round" fill="none"/>
+    <path d="M410 515 432 476 454 515Z" fill="#8B5CF6" opacity=".75"/>
+    <path d="M740 506 762 468 784 506Z" fill="#F59E0B" opacity=".8"/>
+  </g>
+
+  <!-- launch badge -->
+  <g filter="url(#shadow)">
+    <rect x="340" y="116" width="520" height="368" rx="42" fill="#fff" fill-opacity=".78" stroke="#fff" stroke-width="2"/>
+    <rect x="383" y="158" width="434" height="80" rx="40" fill="url(#ribbon)" opacity=".96"/>
+    <text x="600" y="209" text-anchor="middle" font-family="Arial, sans-serif" font-size="32" font-weight="800" fill="#fff">Nezumo запущен</text>
+  </g>
+
+  <!-- central logo medallion -->
+  <g filter="url(#shadow)">
+    <circle cx="600" cy="315" r="112" fill="#fff" fill-opacity=".92" stroke="#fff" stroke-width="5"/>
+    <circle cx="600" cy="315" r="92" fill="#FAFAFE" stroke="#C4B5FD" stroke-width="3"/>
+    <g opacity=".18" fill="#7C3AED">
+      <circle cx="548" cy="274" r="2.4"/><circle cx="578" cy="274" r="2.4"/><circle cx="608" cy="274" r="2.4"/><circle cx="638" cy="274" r="2.4"/>
+      <circle cx="548" cy="304" r="2.4"/><circle cx="578" cy="304" r="2.4"/><circle cx="608" cy="304" r="2.4"/><circle cx="638" cy="304" r="2.4"/>
+      <circle cx="548" cy="334" r="2.4"/><circle cx="578" cy="334" r="2.4"/><circle cx="608" cy="334" r="2.4"/><circle cx="638" cy="334" r="2.4"/>
+      <circle cx="548" cy="364" r="2.4"/><circle cx="578" cy="364" r="2.4"/><circle cx="608" cy="364" r="2.4"/><circle cx="638" cy="364" r="2.4"/>
+    </g>
+    <path d="M522 366c0 0 31-122 78-122 48 0 35 112 82 112 32 0 32-105 32-105" fill="none" stroke="url(#logoStroke)" stroke-width="24" stroke-linecap="round"/>
+    <path d="M536 378c0 0 35-109 78-109 43 0 35 103 80 103 32 0 34-93 34-93" fill="none" stroke="#60A5FA" stroke-width="11" stroke-linecap="round" opacity=".38"/>
+    <circle cx="522" cy="366" r="10" fill="#8B5CF6"/>
+    <circle cx="522" cy="366" r="4" fill="#fff"/>
+    <circle cx="714" cy="251" r="10" fill="#06B6D4"/>
+    <circle cx="714" cy="251" r="4" fill="#fff"/>
+    <path d="m580 318 16 46 11-16 18 18 12-12-18-18 17-10Z" fill="#1E1B4B" opacity=".72"/>
+  </g>
+
+  <!-- celebration cards -->
+  <g filter="url(#softShadow)">
+    <g transform="rotate(-8 276 337)">
+      <rect x="150" y="278" width="230" height="128" rx="24" fill="#fff8c9" stroke="#fff" stroke-width="2"/>
+      <text x="265" y="335" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="800" fill="#342e42">Первый релиз</text>
+      <path d="M210 366h110" stroke="#F59E0B" stroke-width="10" stroke-linecap="round"/>
+    </g>
+    <g transform="rotate(7 922 340)">
+      <rect x="820" y="282" width="230" height="128" rx="24" fill="#e2fbff" stroke="#fff" stroke-width="2"/>
+      <text x="935" y="336" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="800" fill="#342e42">Мы онлайн</text>
+      <path d="M880 366h110" stroke="#06B6D4" stroke-width="10" stroke-linecap="round"/>
+    </g>
+  </g>
+
+  <!-- party poppers -->
+  <g filter="url(#softShadow)">
+    <g transform="translate(274 492) rotate(-16)">
+      <path d="M0 0 84-34 45 48Z" fill="#7C3AED"/>
+      <path d="M16 5 53-11 36 25Z" fill="#C4B5FD"/>
+      <path d="M66-34c26-26 48 4 18 20" fill="none" stroke="#F59E0B" stroke-width="7" stroke-linecap="round"/>
+      <path d="M82-8c38-10 44 29 6 30" fill="none" stroke="#EC4899" stroke-width="7" stroke-linecap="round"/>
+    </g>
+    <g transform="translate(928 494) scale(-1 1) rotate(-16)">
+      <path d="M0 0 84-34 45 48Z" fill="#06B6D4"/>
+      <path d="M16 5 53-11 36 25Z" fill="#BAE6FD"/>
+      <path d="M66-34c26-26 48 4 18 20" fill="none" stroke="#8B5CF6" stroke-width="7" stroke-linecap="round"/>
+      <path d="M82-8c38-10 44 29 6 30" fill="none" stroke="#F59E0B" stroke-width="7" stroke-linecap="round"/>
+    </g>
+  </g>
+
+  <text x="600" y="540" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#342e42" opacity=".72">Тут начинается то, чего ещё нет</text>
+</svg>

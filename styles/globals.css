@@ -1,0 +1,152 @@
+@import "../tailwind.config.css";
+
+@font-face {
+  font-family: "Swanky and Moo Moo";
+  src:
+    url("/swanky-and-moo-moo.woff2") format("woff2"),
+    url("/swanky-and-moo-moo.otf") format("opentype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+}
+
+/**
+ * CSS Variables for ShadCN UI Theming
+ *
+ * These variables define the color scheme for light and dark modes.
+ * They are referenced by the UI components and mapped to Tailwind
+ * utilities in tailwind.config.css.
+ *
+ * Using oklch() for better color interpolation and consistency.
+ * @see https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/oklch
+ */
+:root {
+  --radius: 0.625rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.985 0 0);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --destructive-foreground: oklch(0.985 0 0);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Watercolor background, shared with the board/auth pages (apps/app auth-watercolor).
+   Pinned to the viewport behind all content so every marketing page gets the same
+   soft pink-lavender-cyan wash. */
+body {
+  background-color: #faf8fc;
+  /* Faint board-style grid behind everything (washed over by the watercolor). */
+  background-image:
+    linear-gradient(to right, rgba(86, 74, 120, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(86, 74, 120, 0.06) 1px, transparent 1px);
+  background-size: 44px 44px;
+}
+
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  inset: -20%;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Main pink-lavender-cyan blobs */
+body::before {
+  background:
+    radial-gradient(ellipse 55% 50% at 20% 40%, #f0b4e0 0%, transparent 70%),
+    radial-gradient(ellipse 50% 45% at 35% 25%, #e8a0d8 0%, transparent 65%),
+    radial-gradient(ellipse 45% 55% at 55% 35%, #c8b0e8 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 75% 30%, #a8d0f0 0%, transparent 65%),
+    radial-gradient(ellipse 40% 50% at 85% 45%, #90dce8 0%, transparent 60%),
+    radial-gradient(ellipse 35% 35% at 45% 55%, #d8b8f0 0%, transparent 55%);
+  opacity: 0.4;
+  filter: blur(50px);
+}
+
+/* Secondary softer layer for depth */
+body::after {
+  background:
+    radial-gradient(ellipse 60% 45% at 30% 55%, #f5c0e0 0%, transparent 70%),
+    radial-gradient(ellipse 40% 50% at 65% 50%, #b8c8f0 0%, transparent 65%),
+    radial-gradient(ellipse 50% 35% at 50% 20%, #d0c0f0 0%, transparent 60%),
+    radial-gradient(ellipse 35% 40% at 15% 30%, #e0a8d0 0%, transparent 55%),
+    radial-gradient(ellipse 30% 35% at 80% 60%, #a0d8e8 0%, transparent 60%);
+  opacity: 0.3;
+  filter: blur(70px);
+}
+
+.font-handwritten {
+  font-family: "Swanky and Moo Moo", cursive;
+  font-weight: 400;
+}

@@ -1,0 +1,135 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" role="img" aria-labelledby="title desc">
+  <title id="title">Презентации, медиа и macOS в Nezumo</title>
+  <desc id="desc">Иллюстрация обновления Nezumo с режимом презентации, приложением для macOS и карточками PDF, аудио и видео</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#d8f3ef"/>
+      <stop offset=".48" stop-color="#ded9fb"/>
+      <stop offset="1" stop-color="#f5d9ee"/>
+    </linearGradient>
+    <linearGradient id="screen" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#7158e6"/>
+      <stop offset="1" stop-color="#252236"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop stop-color="#7c5cff"/>
+      <stop offset="1" stop-color="#39c3d2"/>
+    </linearGradient>
+    <linearGradient id="logoMain" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#8B5CF6"/>
+      <stop offset="40%" stop-color="#3B82F6"/>
+      <stop offset="100%" stop-color="#06B6D4"/>
+    </linearGradient>
+    <linearGradient id="logoSoft" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#C084FC"/>
+      <stop offset="50%" stop-color="#818CF8"/>
+      <stop offset="100%" stop-color="#38BDF8"/>
+    </linearGradient>
+    <linearGradient id="logoBorder" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#C4B5FD"/>
+      <stop offset="100%" stop-color="#93C5FD"/>
+    </linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#413956" flood-opacity=".2"/>
+    </filter>
+    <filter id="logoShadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#6366F1" flood-opacity=".2"/>
+    </filter>
+    <pattern id="grid" width="34" height="34" patternUnits="userSpaceOnUse">
+      <path d="M34 0H0v34" fill="none" stroke="#5c536b" stroke-opacity=".08"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="600" rx="36" fill="url(#bg)"/>
+  <rect width="1200" height="600" rx="36" fill="url(#grid)"/>
+  <circle cx="112" cy="92" r="128" fill="#fff" fill-opacity=".24"/>
+  <circle cx="1094" cy="510" r="185" fill="#fff" fill-opacity=".2"/>
+
+  <g filter="url(#shadow)">
+    <rect x="94" y="76" width="650" height="398" rx="28" fill="#fff" fill-opacity=".86" stroke="#fff"/>
+    <rect x="124" y="112" width="590" height="324" rx="22" fill="url(#screen)"/>
+    <rect x="154" y="142" width="530" height="264" rx="18" fill="#fbf9ff"/>
+
+    <rect x="192" y="178" width="214" height="24" rx="12" fill="#2d283a" fill-opacity=".88"/>
+    <rect x="192" y="222" width="286" height="12" rx="6" fill="#2d283a" fill-opacity=".14"/>
+    <rect x="192" y="248" width="242" height="12" rx="6" fill="#2d283a" fill-opacity=".1"/>
+
+    <rect x="500" y="174" width="132" height="96" rx="18" fill="#d9f2f3"/>
+    <circle cx="566" cy="222" r="24" fill="#fff" fill-opacity=".95"/>
+    <path d="m558 207 23 15-23 15Z" fill="#7c5cff"/>
+
+    <rect x="192" y="306" width="440" height="54" rx="17" fill="#eee9ff"/>
+    <circle cx="226" cy="333" r="14" fill="#7c5cff"/>
+    <rect x="258" y="321" width="158" height="10" rx="5" fill="#514760" fill-opacity=".28"/>
+    <rect x="258" y="340" width="108" height="8" rx="4" fill="#514760" fill-opacity=".14"/>
+    <text x="419" y="424" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#fff">Презентация · 3 / 7</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="642" y="128" width="414" height="286" rx="28" fill="#fff" stroke="#fff"/>
+    <rect x="642" y="128" width="414" height="48" rx="28" fill="#fff" fill-opacity=".72"/>
+    <circle cx="676" cy="152" r="6.5" fill="#f5a6c8"/>
+    <circle cx="700" cy="152" r="6.5" fill="#c7b5ee"/>
+    <circle cx="724" cy="152" r="6.5" fill="#8ed9df"/>
+    <rect x="754" y="143" width="120" height="18" rx="9" fill="#2d283a" fill-opacity=".08"/>
+
+    <rect x="678" y="204" width="122" height="142" rx="22" fill="#fff5c8" stroke="#fff"/>
+    <path d="M713 226h38l20 20v55h-58Z" fill="#fff" stroke="#d7b64e" stroke-width="3"/>
+    <path d="M751 226v20h20" fill="none" stroke="#d7b64e" stroke-width="3"/>
+    <text x="739" y="329" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="800" fill="#8b6a00">PDF</text>
+
+    <rect x="822" y="204" width="122" height="142" rx="22" fill="#def5f6" stroke="#fff"/>
+    <circle cx="883" cy="263" r="38" fill="#fff"/>
+    <path d="M864 263h10l18-22v44l-18-22h-10Z" fill="#24aebd"/>
+    <path d="M902 249c8 8 8 20 0 28M913 239c14 15 14 34 0 49" fill="none" stroke="#24aebd" stroke-width="6" stroke-linecap="round"/>
+    <text x="883" y="326" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="800" fill="#168a96">Аудио</text>
+
+    <rect x="750" y="360" width="194" height="86" rx="22" fill="#f1dcf1" stroke="#fff"/>
+    <rect x="774" y="382" width="66" height="42" rx="12" fill="#fff"/>
+    <path d="m801 393 24 10-24 10Z" fill="#7c5cff"/>
+    <rect x="858" y="388" width="58" height="9" rx="4.5" fill="#4f455f" fill-opacity=".28"/>
+    <rect x="858" y="408" width="38" height="7" rx="3.5" fill="#4f455f" fill-opacity=".16"/>
+    <text x="847" y="474" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="800" fill="#6d4f7d">Видео на доске</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="230" y="430" width="238" height="88" rx="24" fill="#fff"/>
+    <g transform="translate(250 448) scale(.270833)">
+      <g transform="translate(8,8)">
+        <rect width="176" height="176" rx="36" fill="#FAFAFE" stroke="url(#logoBorder)" stroke-width="2.5"/>
+        <g opacity="0.15" fill="#7C3AED">
+          <circle cx="36" cy="36" r="2.2"/><circle cx="62" cy="36" r="2.2"/><circle cx="88" cy="36" r="2.2"/><circle cx="114" cy="36" r="2.2"/><circle cx="140" cy="36" r="2.2"/>
+          <circle cx="36" cy="62" r="2.2"/><circle cx="62" cy="62" r="2.2"/><circle cx="88" cy="62" r="2.2"/><circle cx="114" cy="62" r="2.2"/><circle cx="140" cy="62" r="2.2"/>
+          <circle cx="36" cy="88" r="2.2"/><circle cx="62" cy="88" r="2.2"/><circle cx="88" cy="88" r="2.2"/><circle cx="114" cy="88" r="2.2"/><circle cx="140" cy="88" r="2.2"/>
+          <circle cx="36" cy="114" r="2.2"/><circle cx="62" cy="114" r="2.2"/><circle cx="88" cy="114" r="2.2"/><circle cx="114" cy="114" r="2.2"/><circle cx="140" cy="114" r="2.2"/>
+          <circle cx="36" cy="140" r="2.2"/><circle cx="62" cy="140" r="2.2"/><circle cx="88" cy="140" r="2.2"/><circle cx="114" cy="140" r="2.2"/><circle cx="140" cy="140" r="2.2"/>
+        </g>
+        <g transform="translate(66,92)">
+          <path d="M0 0 L0 22 L6 16 L12 28 L17 26 L10 14 L18 12 Z" fill="#1E1B4B" opacity="0.75"/>
+        </g>
+        <g filter="url(#logoShadow)">
+          <path d="M28,138 C28,138 46,48 80,48 C114,48 104,132 138,132 C162,132 154,40 154,40" fill="none" stroke="url(#logoMain)" stroke-width="18" stroke-linecap="round" opacity="0.9"/>
+          <path d="M36,146 C36,146 58,62 90,62 C122,62 114,140 146,140 C170,140 164,52 164,52" fill="none" stroke="url(#logoSoft)" stroke-width="10" stroke-linecap="round" opacity="0.45"/>
+        </g>
+        <circle cx="28" cy="138" r="8" fill="#8B5CF6"/><circle cx="28" cy="138" r="4" fill="white"/>
+        <circle cx="154" cy="40" r="8" fill="#06B6D4"/><circle cx="154" cy="40" r="4" fill="white"/>
+      </g>
+    </g>
+    <text x="338" y="465" font-family="Arial, sans-serif" font-size="18" font-weight="800" fill="#2b2636">macOS</text>
+    <text x="338" y="491" font-family="Arial, sans-serif" font-size="15" font-weight="700" fill="#7a7285">Приложение</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="812" y="70" width="212" height="56" rx="28" fill="#29253e"/>
+    <circle cx="845" cy="98" r="16" fill="#fff" fill-opacity=".14"/>
+    <path d="M845 88v11l8 5" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="925" y="104" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="800" fill="#fff">Таймер</text>
+  </g>
+
+  <g opacity=".85">
+    <path d="M108 392c36-10 55-32 70-68" fill="none" stroke="#7c5cff" stroke-width="7" stroke-linecap="round" stroke-dasharray="2 18"/>
+    <path d="M1032 462c-34-18-52-44-58-82" fill="none" stroke="#39c3d2" stroke-width="7" stroke-linecap="round" stroke-dasharray="2 18"/>
+    <circle cx="100" cy="392" r="8" fill="#7c5cff"/>
+    <circle cx="1038" cy="466" r="8" fill="#39c3d2"/>
+  </g>
+</svg>

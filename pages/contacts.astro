@@ -1,0 +1,50 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+
+// Реквизиты: email подтверждён, остальное — заглушки до получения реальных данных.
+const details = [
+  { label: "Организация", value: "ООО «Незумо»" },
+  { label: "Email", value: "support@nezumo.ru", href: "mailto:support@nezumo.ru" },
+  { label: "ИНН", value: "— (уточняется)" },
+  { label: "ОГРН", value: "— (уточняется)" },
+  { label: "Юридический адрес", value: "— (уточняется)" },
+];
+---
+
+<BaseLayout
+  title="Контакты — Nezumo"
+  description="Контактные данные и реквизиты Nezumo."
+>
+  <section class="py-16 px-4 sm:px-6 lg:px-8">
+    <article class="container mx-auto max-w-3xl">
+      <h1 class="text-4xl font-bold tracking-tight mb-2">Контакты</h1>
+      <p class="text-muted-foreground mb-10">
+        По вопросам поддержки, оплаты и возвратов пишите на{" "}
+        <a href="mailto:support@nezumo.ru" class="text-primary hover:underline"
+          >support@nezumo.ru</a
+        >.
+      </p>
+
+      <dl class="divide-y rounded-lg border">
+        {
+          details.map((item) => (
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-1 sm:gap-4 px-4 py-4">
+              <dt class="text-sm font-medium text-muted-foreground">
+                {item.label}
+              </dt>
+              <dd class="sm:col-span-2">
+                {item.href ? (
+                  <a href={item.href} class="text-primary hover:underline">
+                    {item.value}
+                  </a>
+                ) : (
+                  item.value
+                )}
+              </dd>
+            </div>
+          ))
+        }
+      </dl>
+    </article>
+  </section>
+</BaseLayout>

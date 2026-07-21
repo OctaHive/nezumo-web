@@ -1,0 +1,50 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+
+  // [METADATA]
+  // Marketing site (nezumo.ru). Static Astro assets only — the application
+  // lives on its own subdomain (app.nezumo.ru, see apps/app). No service
+  // bindings or edge routing: this site only links to the app, never proxies it.
+  "name": "nezumo-web",
+  "compatibility_date": "2025-08-15",
+  "compatibility_flags": [],
+  "workers_dev": false,
+
+  // [ASSETS]
+  // Serves the prebuilt Astro site (dist).
+  "assets": {
+    "directory": "./dist"
+  },
+
+  // [ENV:PRODUCTION]
+  // Command: bun wrangler deploy
+  // prettier-ignore
+  "routes": [
+    { "pattern": "nezumo.ru/*", "zone_name": "nezumo.ru" }
+  ],
+  "vars": {
+    "ENVIRONMENT": "production"
+  },
+
+  "env": {
+    // [ENV:DEVELOPMENT]
+    // Command: bun wrangler dev
+    "dev": {
+      "vars": {
+        "ENVIRONMENT": "development"
+      }
+    },
+
+    // [ENV:STAGING]
+    // Command: bun wrangler deploy --env staging
+    "staging": {
+      "vars": {
+        "ENVIRONMENT": "staging"
+      },
+      // prettier-ignore
+      "routes": [
+        { "pattern": "staging.nezumo.ru/*", "zone_name": "nezumo.ru" }
+      ]
+    }
+  }
+}
