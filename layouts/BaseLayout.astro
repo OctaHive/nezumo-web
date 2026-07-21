@@ -1,5 +1,6 @@
 ---
 import "@/styles/globals.css";
+import GitHubButton from "@/components/GitHubButton.astro";
 
 export interface Props {
   title?: string;
@@ -25,8 +26,8 @@ const {
 
 // Origin of the application (app.nezumo.ru). Login/signup live there.
 const appOrigin = import.meta.env.PUBLIC_APP_ORIGIN || "https://app.nezumo.ru";
-const loginUrl = `${appOrigin}/login`;
-const signupUrl = `${appOrigin}/signup`;
+const loginUrl = `${appOrigin}/login?lang=${lang}`;
+const signupUrl = `${appOrigin}/signup?lang=${lang}`;
 
 const prefix = lang === "en" ? "/en" : "";
 const localPath = (path: string) => path === "/" ? `${prefix}/` : `${prefix}${path}`;
@@ -188,7 +189,7 @@ const languageUrl = lang === "en" ? russianUrl : englishUrl;
     <div class="min-h-screen flex flex-col">
       <!-- Header -->
       <header class="sticky top-0 z-50 px-3 pt-3 sm:px-6">
-        <div class="container mx-auto max-w-7xl">
+        <div class="container mx-auto max-w-[1536px]">
           <div
             class="relative flex h-[68px] items-center justify-between rounded-2xl border border-white/75 bg-white/65 px-3 shadow-[0_14px_45px_-24px_rgba(57,38,93,0.5)] backdrop-blur-xl sm:px-4"
           >
@@ -226,7 +227,7 @@ const languageUrl = lang === "en" ? russianUrl : englishUrl;
             </a>
 
             <nav
-              class="absolute left-1/2 hidden -translate-x-1/2 items-center gap-1 xl:flex"
+              class="absolute left-1/2 hidden -translate-x-1/2 items-center gap-1 2xl:flex"
               aria-label={labels.navigation}
             >
               {
@@ -235,7 +236,7 @@ const languageUrl = lang === "en" ? russianUrl : englishUrl;
                     href={link.href}
                     aria-current={isActive(link.href) ? "page" : undefined}
                     class:list={[
-                      "relative px-4 py-2 text-sm font-semibold transition-colors",
+                      "relative px-3 py-2 text-sm font-semibold transition-colors",
                       isActive(link.href)
                         ? "text-foreground"
                         : "text-muted-foreground hover:text-foreground",
@@ -250,7 +251,8 @@ const languageUrl = lang === "en" ? russianUrl : englishUrl;
               }
             </nav>
 
-            <div class="hidden items-center gap-1.5 xl:flex">
+            <div class="hidden items-center gap-1.5 2xl:flex">
+              <GitHubButton lang={lang} />
               <a
                 href={languageUrl}
                 hreflang={lang === "en" ? "ru" : "en"}
@@ -284,7 +286,7 @@ const languageUrl = lang === "en" ? russianUrl : englishUrl;
               </a>
             </div>
 
-            <div class="flex items-center gap-2 xl:hidden">
+            <div class="flex items-center gap-2 2xl:hidden">
               <a
                 href={signupUrl}
                 class="hidden h-10 items-center rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 px-4 text-sm font-semibold text-white shadow-sm sm:inline-flex"
@@ -345,6 +347,9 @@ const languageUrl = lang === "en" ? russianUrl : englishUrl;
                     }
                   </nav>
                   <div class="my-2 h-px bg-border/70"></div>
+                  <div class="px-2 py-1">
+                    <GitHubButton lang={lang} mobile />
+                  </div>
                   <a
                     href={languageUrl}
                     hreflang={lang === "en" ? "ru" : "en"}

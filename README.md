@@ -35,7 +35,7 @@ page whenever they change languages.
 - [Astro](https://astro.build/) for static site generation
 - [Tailwind CSS](https://tailwindcss.com/) for styling
 - [Bun](https://bun.sh/) for package management and scripts
-- [Cloudflare Workers](https://developers.cloudflare.com/workers/) for hosting
+- [nginx](https://nginx.org/) for serving the generated static website
 
 ## Getting started
 
@@ -89,8 +89,6 @@ The website will be available at <http://localhost:4321>.
 | `bun run check` | Run Astro and TypeScript diagnostics |
 | `bun run build` | Build the production website into `dist/` |
 | `bun run preview` | Preview the production build locally |
-| `bun run deploy` | Deploy the production build with Wrangler |
-| `bun run logs` | Stream Cloudflare Worker logs |
 
 ## Project structure
 
@@ -102,8 +100,7 @@ The website will be available at <http://localhost:4321>.
 ├── public/             # Images, fonts, icons, and static metadata
 ├── styles/             # Global styles
 ├── astro.config.mjs    # Astro configuration
-├── content.config.ts   # Changelog collection schema
-└── wrangler.jsonc      # Cloudflare deployment configuration
+└── content.config.ts   # Changelog collection schema
 ```
 
 ## Localization
@@ -119,16 +116,33 @@ metadata.
 
 ## Deployment
 
-Create a production build before deploying:
+Create and validate a production build:
 
 ```bash
 bun run check
 bun run build
-bun run deploy
 ```
 
-Wrangler serves the generated `dist/` directory and routes production traffic
-for `nezumo.ru` according to `wrangler.jsonc`.
+The generated static website is written to `dist/`. Upload the **contents** of
+this directory to the document root configured for `nezumo.ru` on your nginx
+server.
+
+A minimal nginx location for the website looks like this:
+
+```nginx
+location / {
+    try_files $uri $uri/ =404;
+}
+
+location /_astro/ {
+    expires 1y;
+    add_header Cache-Control "public, immutable";
+}
+```
+
+Reload nginx after publishing the new files. Since Astro generates an
+`index.html` file for every route, no application server or server-side runtime
+is required.
 
 ## License
 

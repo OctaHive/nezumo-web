@@ -43,7 +43,7 @@ const platforms = [
       </div>
       <div class="mx-auto mt-10 flex max-w-3xl flex-col items-center justify-between gap-4 rounded-2xl border border-white/70 bg-white/45 px-6 py-5 text-center backdrop-blur sm:flex-row sm:text-left">
         <div><p class="font-semibold">Prefer not to install an app?</p><p class="mt-1 text-sm text-muted-foreground">The web version runs in your browser and is always up to date.</p></div>
-        <a href={import.meta.env.PUBLIC_APP_ORIGIN || "https://app.nezumo.ru"} class="shrink-0 rounded-xl border bg-white/70 px-5 py-2.5 text-sm font-semibold shadow-sm transition hover:bg-white">Open web app</a>
+        <a href={`${import.meta.env.PUBLIC_APP_ORIGIN || "https://app.nezumo.ru"}?lang=en`} class="shrink-0 rounded-xl border bg-white/70 px-5 py-2.5 text-sm font-semibold shadow-sm transition hover:bg-white">Open web app</a>
       </div>
     </div>
   </section>
