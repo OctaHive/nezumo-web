@@ -1,59 +1,60 @@
 ---
+import PlatformDownloads from "@/components/PlatformDownloads.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 
-const macosVersion = import.meta.env.PUBLIC_DESKTOP_MACOS_VERSION || "0.1.12";
-const macosUrl = import.meta.env.PUBLIC_DESKTOP_MACOS_URL || `https://nezumo.ru/releases/macos/Nezumo-${macosVersion}.dmg`;
-const windowsVersion = import.meta.env.PUBLIC_DESKTOP_WINDOWS_VERSION || "0.1.12";
-const windowsUrl = import.meta.env.PUBLIC_DESKTOP_WINDOWS_URL || `https://nezumo.ru/releases/windows/Nezumo-${windowsVersion}-setup.exe`;
-const platforms = [
-  { id: "macos", name: "macOS", note: "For Apple Silicon and Intel", format: ".dmg", version: macosVersion, href: macosUrl, accent: "from-fuchsia-200/80 to-violet-200/70", mark: "⌘" },
-  { id: "windows", name: "Windows", note: "For Windows 10 and later", format: ".exe", version: windowsVersion, href: windowsUrl, accent: "from-cyan-200/80 to-blue-200/70", mark: "⊞" },
-  { id: "linux", name: "Linux", note: "Universal build", format: ".AppImage", version: null, href: import.meta.env.PUBLIC_DESKTOP_LINUX_URL, accent: "from-emerald-200/80 to-cyan-200/70", mark: "Lx" },
-];
+const appOrigin = import.meta.env.PUBLIC_APP_ORIGIN || "https://app.nezumo.ru";
 ---
 
-<BaseLayout lang="en" title="Download Nezumo for desktop" description="Download Nezumo for macOS, Windows, or Linux and work with your boards from your desktop.">
+<BaseLayout
+  lang="en"
+  title="Download Nezumo for desktop"
+  description="Download Nezumo for macOS, Windows, or Linux and work with your boards from your desktop."
+>
   <section class="relative overflow-hidden px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
-    <div class="pointer-events-none absolute left-1/2 top-10 h-64 w-64 -translate-x-1/2 rounded-full bg-fuchsia-300/30 blur-3xl"></div>
+    <div
+      class="pointer-events-none absolute left-1/2 top-10 h-64 w-64 -translate-x-1/2 rounded-full bg-fuchsia-300/30 blur-3xl"
+    >
+    </div>
+
     <div class="container relative mx-auto max-w-6xl">
       <div class="mx-auto max-w-3xl text-center">
-        <div class="mb-6 inline-flex items-center gap-2 rounded-full border border-white/70 bg-white/55 px-4 py-2 text-sm font-medium shadow-sm backdrop-blur"><span class="h-2 w-2 rounded-full bg-emerald-500"></span>Nezumo for desktop</div>
-        <h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">Your boards, always within reach</h1>
-        <p class="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground sm:text-xl">Open projects in a dedicated app — more room for ideas and fewer distracting browser tabs.</p>
+        <div
+          class="mb-6 inline-flex items-center gap-2 rounded-full border border-white/70 bg-white/55 px-4 py-2 text-sm font-medium shadow-sm backdrop-blur"
+        >
+          <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+          Nezumo for desktop
+        </div>
+        <h1
+          class="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl"
+        >
+          Your boards, always within reach
+        </h1>
+        <p
+          class="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground sm:text-xl"
+        >
+          Open projects in a dedicated app — more room for ideas and fewer
+          distracting browser tabs.
+        </p>
       </div>
-      <div class="mt-14 grid gap-6 md:grid-cols-3">
-        {platforms.map((platform) => (
-          <article data-platform={platform.id} class="platform-card group relative overflow-hidden rounded-3xl border border-white/80 bg-white/60 p-7 shadow-[0_18px_60px_-30px_rgba(57,38,93,0.45)] backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:bg-white/75">
-            <div class={`absolute inset-x-0 top-0 h-32 bg-gradient-to-br ${platform.accent} opacity-70 blur-2xl transition group-hover:opacity-100`}></div>
-            <div class="relative">
-              <div class="mb-8 flex items-start justify-between">
-                <div class="flex h-16 w-16 items-center justify-center rounded-2xl border border-white/80 bg-white/75 text-xl font-extrabold text-foreground shadow-sm">{platform.mark}</div>
-                {platform.version ? <span class="rounded-full bg-foreground px-3 py-1 text-xs font-semibold text-background">Version {platform.version}</span> : <span class="recommended-badge hidden rounded-full bg-foreground px-3 py-1 text-xs font-semibold text-background">For your device</span>}
-              </div>
-              <h2 class="text-2xl font-bold">{platform.name}</h2>
-              <p class="mt-2 min-h-6 text-sm text-muted-foreground">{platform.note}</p>
-              {platform.href ? (
-                <a href={platform.href} class="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-foreground px-5 py-3.5 font-semibold text-background shadow-sm transition hover:opacity-85 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" download>
-                  Download {platform.format}<span aria-hidden="true">↓</span>
-                </a>
-              ) : <span class="mt-8 inline-flex w-full cursor-not-allowed items-center justify-center rounded-xl border border-foreground/10 bg-white/50 px-5 py-3.5 font-semibold text-muted-foreground">Coming soon</span>}
-            </div>
-          </article>
-        ))}
-      </div>
-      <div class="mx-auto mt-10 flex max-w-3xl flex-col items-center justify-between gap-4 rounded-2xl border border-white/70 bg-white/45 px-6 py-5 text-center backdrop-blur sm:flex-row sm:text-left">
-        <div><p class="font-semibold">Prefer not to install an app?</p><p class="mt-1 text-sm text-muted-foreground">The web version runs in your browser and is always up to date.</p></div>
-        <a href={`${import.meta.env.PUBLIC_APP_ORIGIN || "https://app.nezumo.ru"}?lang=en`} class="shrink-0 rounded-xl border bg-white/70 px-5 py-2.5 text-sm font-semibold shadow-sm transition hover:bg-white">Open web app</a>
+
+      <PlatformDownloads lang="en" />
+
+      <div
+        class="mx-auto mt-10 flex max-w-3xl flex-col items-center justify-between gap-4 rounded-2xl border border-white/70 bg-white/45 px-6 py-5 text-center backdrop-blur sm:flex-row sm:text-left"
+      >
+        <div>
+          <p class="font-semibold">Prefer not to install an app?</p>
+          <p class="mt-1 text-sm text-muted-foreground">
+            The web version runs in your browser and is always up to date.
+          </p>
+        </div>
+        <a
+          href={`${appOrigin}?lang=en`}
+          class="shrink-0 rounded-xl border bg-white/70 px-5 py-2.5 text-sm font-semibold shadow-sm transition hover:bg-white"
+        >
+          Open web app
+        </a>
       </div>
     </div>
   </section>
-  <script>
-    const userAgent = navigator.userAgent.toLowerCase();
-    const platform = userAgent.includes("mac") ? "macos" : userAgent.includes("win") ? "windows" : userAgent.includes("linux") ? "linux" : null;
-    if (platform) {
-      const card = document.querySelector(`[data-platform="${platform}"]`);
-      card?.classList.add("ring-2", "ring-foreground/20");
-      card?.querySelector(".recommended-badge")?.classList.remove("hidden");
-    }
-  </script>
 </BaseLayout>
