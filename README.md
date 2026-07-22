@@ -7,7 +7,7 @@
 <h1 align="center">Nezumo Web</h1>
 
 <p align="center">
-  The bilingual marketing website for <a href="https://nezumo.ru">Nezumo</a>,
+  The website for <a href="https://nezumo.ru">Nezumo</a>,
   an infinite online canvas for collaborative thinking, planning, and presentations.
 </p>
 
@@ -24,7 +24,6 @@ The website includes:
 - A feature request form
 - A Markdown-powered changelog
 - Terms, privacy, refund, and contact pages
-- Complete Russian and English versions
 
 Russian is the default language and uses root-level routes. English pages use
 the `/en/` prefix. The language switcher keeps visitors on the corresponding
