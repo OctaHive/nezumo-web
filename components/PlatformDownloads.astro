@@ -1,0 +1,134 @@
+---
+export interface Props {
+  lang?: "ru" | "en";
+}
+
+const { lang = "ru" } = Astro.props;
+const isEnglish = lang === "en";
+
+const macosVersion = import.meta.env.PUBLIC_DESKTOP_MACOS_VERSION || "0.1.12";
+const macosUrl =
+  import.meta.env.PUBLIC_DESKTOP_MACOS_URL ||
+  `https://nezumo.ru/releases/macos/Nezumo-${macosVersion}.dmg`;
+const windowsVersion =
+  import.meta.env.PUBLIC_DESKTOP_WINDOWS_VERSION || "0.1.12";
+const windowsUrl =
+  import.meta.env.PUBLIC_DESKTOP_WINDOWS_URL ||
+  `https://nezumo.ru/releases/windows/Nezumo-${windowsVersion}-setup.exe`;
+
+const platforms = [
+  {
+    id: "macos",
+    name: "macOS",
+    note: isEnglish ? "For Apple Silicon and Intel" : "Для Apple Silicon и Intel",
+    format: ".dmg",
+    version: macosVersion,
+    href: macosUrl,
+    accent: "from-fuchsia-200/80 to-violet-200/70",
+    icon: `<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M17.05 12.54c-.02-2.43 1.99-3.61 2.08-3.67a4.45 4.45 0 0 0-3.5-1.9c-1.47-.15-2.9.88-3.65.88-.77 0-1.93-.86-3.18-.83a4.66 4.66 0 0 0-3.92 2.39c-1.7 2.94-.43 7.27 1.2 9.65.82 1.17 1.77 2.47 3.02 2.42 1.22-.05 1.68-.78 3.16-.78 1.46 0 1.9.78 3.17.75 1.31-.02 2.14-1.17 2.93-2.35a9.68 9.68 0 0 0 1.34-2.73 4.19 4.19 0 0 1-2.65-3.83ZM14.67 5.4a4.28 4.28 0 0 0 .98-3.08 4.36 4.36 0 0 0-2.83 1.46 4.07 4.07 0 0 0-1.01 2.96 3.61 3.61 0 0 0 2.86-1.34Z"/></svg>`,
+  },
+  {
+    id: "windows",
+    name: "Windows",
+    note: isEnglish ? "For Windows 10 and later" : "Для Windows 10 и новее",
+    format: ".exe",
+    version: windowsVersion,
+    href: windowsUrl,
+    accent: "from-cyan-200/80 to-blue-200/70",
+    icon: `<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="m3 5.55 7.35-1.01v7.1H3V5.55Zm8.25-1.14L21 3v8.64h-9.75V4.41ZM3 12.55h7.35v7.11L3 18.65v-6.1Zm8.25 0H21V21l-9.75-1.34v-7.11Z"/></svg>`,
+  },
+  {
+    id: "linux",
+    name: "Linux",
+    note: isEnglish ? "Universal build" : "Универсальная сборка",
+    format: ".AppImage",
+    version: null,
+    href: import.meta.env.PUBLIC_DESKTOP_LINUX_URL,
+    accent: "from-emerald-200/80 to-cyan-200/70",
+    icon: `<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12.5 2c-2.7 0-4.45 2.2-4.45 5.45 0 1.21.22 2.28.6 3.2-.7.76-1.22 1.75-1.52 2.92-.78.5-1.48 1.13-2.03 1.9-.48.68-.2 1.62.56 1.92l1.09.43c.17 1.09.65 2.1 1.4 2.91.51.56 1.4.5 1.84-.12l.5-.7c.62.2 1.3.31 2.01.31s1.39-.11 2.01-.31l.5.7c.44.62 1.33.68 1.84.12a5.28 5.28 0 0 0 1.4-2.91l1.09-.43c.76-.3 1.04-1.24.56-1.92a6.72 6.72 0 0 0-2.03-1.9 7.75 7.75 0 0 0-1.52-2.92c.38-.92.6-1.99.6-3.2C16.95 4.2 15.2 2 12.5 2Zm-1.62 4.15c.5 0 .9.5.9 1.12s-.4 1.13-.9 1.13-.9-.5-.9-1.13.4-1.12.9-1.12Zm3.24 0c.5 0 .9.5.9 1.12s-.4 1.13-.9 1.13-.9-.5-.9-1.13.4-1.12.9-1.12Zm-1.62 2.2c.72 0 1.3.43 1.3.96s-.58.96-1.3.96-1.3-.43-1.3-.96.58-.96 1.3-.96Z"/></svg>`,
+  },
+];
+---
+
+<div class="mt-14 grid gap-6 md:grid-cols-3">
+  {
+    platforms.map((platform) => (
+      <article
+        data-platform={platform.id}
+        class="platform-card group relative overflow-hidden rounded-3xl border border-white/80 bg-white/60 p-7 shadow-[0_18px_60px_-30px_rgba(57,38,93,0.45)] backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:bg-white/75"
+      >
+        <div
+          class={`absolute inset-x-0 top-0 h-32 bg-gradient-to-br ${platform.accent} opacity-70 blur-2xl transition group-hover:opacity-100`}
+        />
+        <div class="relative">
+          <div class="mb-8 flex items-start justify-between">
+            <div
+              class="platform-icon flex h-16 w-16 items-center justify-center rounded-2xl border border-white/80 bg-white/75 p-4 text-foreground shadow-sm"
+              set:html={platform.icon}
+            />
+            {platform.version ? (
+              <span class="rounded-full bg-foreground px-3 py-1 text-xs font-semibold text-background">
+                {isEnglish ? "Version" : "Версия"} {platform.version}
+              </span>
+            ) : (
+              <span class="recommended-badge hidden rounded-full bg-foreground px-3 py-1 text-xs font-semibold text-background">
+                {isEnglish ? "For your device" : "Для вашего устройства"}
+              </span>
+            )}
+          </div>
+
+          <h2 class="text-2xl font-bold">{platform.name}</h2>
+          <p class="mt-2 min-h-6 text-sm text-muted-foreground">{platform.note}</p>
+
+          {platform.href ? (
+            <a
+              href={platform.href}
+              class="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-foreground px-5 py-3.5 font-semibold text-background shadow-sm transition hover:opacity-85 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              download
+            >
+              {isEnglish ? "Download" : "Скачать"} {platform.format}
+              <svg
+                viewBox="0 0 24 24"
+                class="h-4 w-4"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                aria-hidden="true"
+              >
+                <path d="M12 3v12m0 0 4-4m-4 4-4-4M5 21h14" />
+              </svg>
+            </a>
+          ) : (
+            <span class="mt-8 inline-flex w-full cursor-not-allowed items-center justify-center rounded-xl border border-foreground/10 bg-white/50 px-5 py-3.5 font-semibold text-muted-foreground">
+              {isEnglish ? "Coming soon" : "Скоро"}
+            </span>
+          )}
+        </div>
+      </article>
+    ))
+  }
+</div>
+
+<script>
+  const userAgent = navigator.userAgent.toLowerCase();
+  const platform = userAgent.includes("mac")
+    ? "macos"
+    : userAgent.includes("win")
+      ? "windows"
+      : userAgent.includes("linux")
+        ? "linux"
+        : null;
+
+  if (platform) {
+    const card = document.querySelector(`[data-platform="${platform}"]`);
+    card?.classList.add("ring-2", "ring-foreground/20");
+    card?.querySelector(".recommended-badge")?.classList.remove("hidden");
+  }
+</script>
+
+<style>
+  .platform-icon :global(svg) {
+    width: 100%;
+    height: 100%;
+  }
+</style>
