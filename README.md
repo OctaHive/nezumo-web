@@ -126,6 +126,42 @@ The generated static website is written to `dist/`. Upload the **contents** of
 this directory to the document root configured for `nezumo.ru` on your nginx
 server.
 
+### Automatic deployment from a tag
+
+The `Deploy website` GitHub Actions workflow builds and publishes the website
+whenever a tag matching `deploy-*` is pushed. For example:
+
+```bash
+git tag deploy-2026-07-23
+git push origin deploy-2026-07-23
+```
+
+The workflow checks out the tagged revision, installs the locked dependencies,
+runs the project checks, builds `dist/`, and synchronizes its contents to the
+nginx server over SSH.
+
+Create a `production` environment in the GitHub repository and add these
+secrets:
+
+| Secret | Description |
+| --- | --- |
+| `DEPLOY_HOST` | Server hostname or IP address |
+| `DEPLOY_PORT` | SSH port, usually `22` |
+| `DEPLOY_USER` | SSH user with write access to the website directory |
+| `DEPLOY_PATH` | Absolute nginx document-root path, for example `/var/www/nezumo.ru` |
+| `DEPLOY_SSH_KEY` | Private SSH key used only for deployment |
+| `DEPLOY_KNOWN_HOSTS` | Verified `known_hosts` entry for the deployment server |
+
+Add the matching public key to the deployment user's `~/.ssh/authorized_keys`.
+The server must have `rsync` installed. Verify the server's SSH host-key
+fingerprint before saving its `known_hosts` entry in GitHub.
+
+Deployment uses `rsync --delete`, so files removed from `dist/` are also removed
+from `DEPLOY_PATH`. As a safety measure, the workflow requires an absolute path
+and refuses to deploy to `/`.
+
+### nginx configuration
+
 A minimal nginx location for the website looks like this:
 
 ```nginx
